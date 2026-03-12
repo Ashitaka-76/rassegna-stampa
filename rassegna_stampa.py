@@ -478,7 +478,7 @@ body{{
 .topbar-logo{{
   height:144px;width:auto;object-fit:contain;
   margin-right:1.5rem;flex-shrink:0;
-  background:#1a2e22;
+  background:#006b44;
   border-radius:12px;
   padding:.6rem 1rem;
   box-shadow:0 2px 10px rgba(32,159,111,.20);
