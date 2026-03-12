@@ -314,6 +314,20 @@ def refresh_news():
     cleanup_old()
     print(f"\n  ✓ Totale nuovi articoli: {total}\n")
 
+# ─── LOGO ─────────────────────────────────────────────────────────────────────
+def _logo_b64() -> str:
+    """Carica il logo WellMakers da assets/ e lo converte in base64."""
+    import base64
+    for name in ("wellmakers_logo.png", "wellmakers_logo.jpg",
+                 "wellmakers_logo.svg", "logo.png", "logo.jpg"):
+        p = APP_DIR / "assets" / name
+        if p.exists():
+            mime = "image/svg+xml" if name.endswith(".svg") else \
+                   "image/jpeg" if name.endswith(".jpg") else "image/png"
+            data = base64.b64encode(p.read_bytes()).decode()
+            return f"data:{mime};base64,{data}"
+    return ""
+
 # ─── GENERATORE HTML ──────────────────────────────────────────────────────────
 def build_html(articles: list[dict]) -> str:
     # Raggruppa per data e categoria
@@ -410,6 +424,10 @@ def build_html(articles: list[dict]) -> str:
 
     now_str = datetime.now().strftime("%d %B %Y, %H:%M")
 
+    logo_src = _logo_b64()
+    logo_tag = (f'<img src="{logo_src}" alt="WellMakers" class="topbar-logo">'
+                if logo_src else "")
+
     # ──────────────────────────────────────────────────────────────────────────
     return f'''<!DOCTYPE html>
 <html lang="it">
@@ -427,8 +445,8 @@ def build_html(articles: list[dict]) -> str:
   --border:     #334155;
   --text:       #e2e8f0;
   --text-muted: #94a3b8;
-  --accent:     #6366f1;
-  --accent2:    #818cf8;
+  --accent:     #00935c;
+  --accent2:    #34c98a;
   --radius:     12px;
   --shadow:     0 4px 24px rgba(0,0,0,.35);
   --sidebar-w:  260px;
@@ -443,20 +461,24 @@ body{{
 /* ── TOPBAR ──────────────────────────────────────────────────────────────── */
 .topbar{{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  height:60px;background:var(--surface);
+  height:160px;background:var(--surface);
   border-bottom:1px solid var(--border);
   display:flex;align-items:center;padding:0 1.5rem;gap:1rem;
   backdrop-filter:blur(10px);
 }}
 .logo{{
   font-size:1.15rem;font-weight:700;
-  background:linear-gradient(135deg,#6366f1,#a78bfa);
+  background:linear-gradient(135deg,#00935c,#34c98a);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   white-space:nowrap;
 }}
 .logo small{{font-size:.7rem;font-weight:400;color:var(--text-muted);display:block;
   -webkit-text-fill-color:var(--text-muted);}}
 .topbar-spacer{{flex:1}}
+.topbar-logo{{
+  height:144px;width:auto;object-fit:contain;
+  margin-right:1.5rem;flex-shrink:0;
+}}
 .update-info{{font-size:.78rem;color:var(--text-muted);text-align:right;line-height:1.4}}
 .stats-chips{{display:flex;gap:.5rem;align-items:center}}
 .chip{{
@@ -465,16 +487,16 @@ body{{
 }}
 .chip.today{{color:#34d399;border-color:#34d39940}}
 .chip.week{{color:#60a5fa;border-color:#60a5fa40}}
-.chip.total{{color:#a78bfa;border-color:#a78bfa40}}
+.chip.total{{color:#34c98a;border-color:#34c98a40}}
 
 /* ── LAYOUT ──────────────────────────────────────────────────────────────── */
 .layout{{
-  display:flex;min-height:100vh;padding-top:60px;
+  display:flex;min-height:100vh;padding-top:160px;
 }}
 
 /* ── SIDEBAR ─────────────────────────────────────────────────────────────── */
 .sidebar{{
-  position:fixed;left:0;top:60px;bottom:0;
+  position:fixed;left:0;top:160px;bottom:0;
   width:var(--sidebar-w);
   background:var(--surface);border-right:1px solid var(--border);
   overflow-y:auto;padding:1.25rem .75rem;
@@ -494,8 +516,8 @@ body{{
 }}
 .nav-item:hover{{background:var(--surface2);border-color:var(--border)}}
 .nav-item.active{{
-  background:linear-gradient(135deg,#4f46e520,#7c3aed20);
-  border-color:#6366f140;color:var(--accent2);
+  background:linear-gradient(135deg,#00935c20,#00935c10);
+  border-color:#00935c40;color:var(--accent2);
 }}
 .nav-icon{{font-size:1rem;width:22px;text-align:center}}
 .nav-label{{flex:1;font-weight:500}}
@@ -506,8 +528,8 @@ body{{
 .nav-all{{
   display:flex;align-items:center;gap:.6rem;
   padding:.6rem .85rem;border-radius:8px;cursor:pointer;
-  background:linear-gradient(135deg,#4f46e520,#7c3aed20);
-  border:1px solid #6366f140;color:var(--accent2);
+  background:linear-gradient(135deg,#00935c20,#00935c10);
+  border:1px solid #00935c40;color:var(--accent2);
   font-size:.88rem;font-weight:700;margin-bottom:.5rem;
 }}
 .nav-all:hover{{filter:brightness(1.15)}}
@@ -550,7 +572,7 @@ body{{
 }}
 #search:focus{{
   outline:none;border-color:var(--accent);
-  box-shadow:0 0 0 3px #6366f120;
+  box-shadow:0 0 0 3px #00935c20;
 }}
 #search::placeholder{{color:var(--text-muted)}}
 
@@ -582,7 +604,7 @@ body{{
 }}
 .card:hover{{
   transform:translateY(-2px);box-shadow:var(--shadow);
-  border-color:#6366f150;
+  border-color:#00935c50;
 }}
 .card-header{{display:flex;align-items:center;justify-content:space-between;gap:.5rem}}
 .cat-badge{{
@@ -610,7 +632,7 @@ body{{
   font-size:.78rem;font-weight:600;color:var(--accent2);
   text-decoration:none;transition:color .15s;
 }}
-.read-more:hover{{color:#c4b5fd}}
+.read-more:hover{{color:#6de8b4}}
 
 /* Gruppi per data */
 .date-group{{margin-bottom:2rem}}
@@ -677,7 +699,7 @@ body{{
 .topbar-btn.green{{color:#34d399;border-color:#34d39940}}
 .topbar-btn.green:hover{{background:#34d39915}}
 .topbar-btn.active{{
-  background:#6366f120;color:var(--accent2);border-color:#6366f150;
+  background:#00935c20;color:var(--accent2);border-color:#00935c50;
 }}
 
 /* "Solo non letti" in search row */
@@ -723,6 +745,7 @@ body{{
 
 <!-- TOPBAR -->
 <header class="topbar">
+  {logo_tag}
   <div class="logo">
     📰 Rassegna Stampa
     <small>Welfare · Wellbeing · Wellness</small>
@@ -756,7 +779,7 @@ body{{
     <div class="nav-all">
       <span class="nav-icon" onclick="filterCat(null)" style="cursor:pointer">🗞️</span>
       <span class="nav-label" onclick="filterCat(null)" style="cursor:pointer">Tutte le notizie</span>
-      <span class="nav-badge" id="badge-all" style="background:#6366f1">{total_count}</span>
+      <span class="nav-badge" id="badge-all" style="background:#00935c">{total_count}</span>
       <button class="cat-mark-btn" title="Segna tutto letto"
               onclick="markAllRead(null,null)" style="color:var(--text-muted)">✓</button>
     </div>
