@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# L'HTML viene generato dallo script e copiato in docs/ dal workflow
+data/rassegna.html
+
+# File macOS
+.DS_Store
+avvia.command
+avvia_aggiorna.command
+istruzioni.rtf

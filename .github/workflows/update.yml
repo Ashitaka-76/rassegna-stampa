@@ -1,0 +1,42 @@
+name: Aggiorna Rassegna Stampa
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'   # ogni 4 ore (0:00, 4:00, 8:00, 12:00, 16:00, 20:00 UTC)
+  workflow_dispatch:          # permette anche il lancio manuale dalla UI di GitHub
+
+permissions:
+  contents: write             # necessario per fare push del DB e dell'HTML aggiornati
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Installa dipendenze
+        run: pip install -r requirements.txt
+
+      - name: Aggiorna notizie e genera HTML
+        run: python rassegna_stampa.py --refresh
+
+      - name: Copia HTML in docs/
+        run: |
+          mkdir -p docs
+          cp data/rassegna.html docs/index.html
+
+      - name: Commit e push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/rassegna.db docs/index.html
+          git diff --staged --quiet || git commit -m "Aggiornamento $(date -u '+%d/%m/%Y %H:%M UTC')"
+          git push
