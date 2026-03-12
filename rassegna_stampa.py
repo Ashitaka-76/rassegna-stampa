@@ -439,16 +439,16 @@ def build_html(articles: list[dict]) -> str:
 /* ── RESET & BASE ─────────────────────────────────────────────────────────── */
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
 :root{{
-  --bg:         #0f172a;
-  --surface:    #1e293b;
-  --surface2:   #263144;
-  --border:     #334155;
-  --text:       #e2e8f0;
-  --text-muted: #94a3b8;
+  --bg:         #ffffff;
+  --surface:    #ffffff;
+  --surface2:   #f0faf6;
+  --border:     #209f6f;
+  --text:       #1a2e22;
+  --text-muted: #5f8a74;
   --accent:     #00935c;
-  --accent2:    #34c98a;
+  --accent2:    #00935c;
   --radius:     12px;
-  --shadow:     0 4px 24px rgba(0,0,0,.35);
+  --shadow:     0 4px 24px rgba(32,159,111,.14);
   --sidebar-w:  260px;
 }}
 html{{scroll-behavior:smooth}}
@@ -461,33 +461,32 @@ body{{
 /* ── TOPBAR ──────────────────────────────────────────────────────────────── */
 .topbar{{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  height:160px;background:var(--surface);
-  border-bottom:1px solid var(--border);
+  height:160px;background:#006b44;
+  border-bottom:2px solid #005236;
   display:flex;align-items:center;padding:0 1.5rem;gap:1rem;
   backdrop-filter:blur(10px);
 }}
 .logo{{
   font-size:1.15rem;font-weight:700;
-  background:linear-gradient(135deg,#00935c,#34c98a);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-text-fill-color:#ffffff;color:#ffffff;
   white-space:nowrap;
 }}
-.logo small{{font-size:.7rem;font-weight:400;color:var(--text-muted);display:block;
-  -webkit-text-fill-color:var(--text-muted);}}
+.logo small{{font-size:.7rem;font-weight:400;display:block;
+  color:rgba(255,255,255,.7);-webkit-text-fill-color:rgba(255,255,255,.7);}}
 .topbar-spacer{{flex:1}}
 .topbar-logo{{
   height:144px;width:auto;object-fit:contain;
   margin-right:1.5rem;flex-shrink:0;
 }}
-.update-info{{font-size:.78rem;color:var(--text-muted);text-align:right;line-height:1.4}}
+.update-info{{font-size:.78rem;color:rgba(255,255,255,.7);text-align:right;line-height:1.4}}
 .stats-chips{{display:flex;gap:.5rem;align-items:center}}
 .chip{{
   padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600;
-  background:var(--surface2);border:1px solid var(--border);
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.30);color:#fff;
 }}
-.chip.today{{color:#34d399;border-color:#34d39940}}
-.chip.week{{color:#60a5fa;border-color:#60a5fa40}}
-.chip.total{{color:#34c98a;border-color:#34c98a40}}
+.chip.today{{color:#a7f3d0;border-color:rgba(167,243,208,.40)}}
+.chip.week{{color:#bfdbfe;border-color:rgba(191,219,254,.40)}}
+.chip.total{{color:#ffffff;border-color:rgba(255,255,255,.40)}}
 
 /* ── LAYOUT ──────────────────────────────────────────────────────────────── */
 .layout{{
@@ -632,7 +631,7 @@ body{{
   font-size:.78rem;font-weight:600;color:var(--accent2);
   text-decoration:none;transition:color .15s;
 }}
-.read-more:hover{{color:#6de8b4}}
+.read-more:hover{{color:#007a4d}}
 
 /* Gruppi per data */
 .date-group{{margin-bottom:2rem}}
@@ -644,7 +643,7 @@ body{{
   display:flex;align-items:center;gap:.5rem;
 }}
 .date-today-badge{{
-  background:#34d39920;color:#34d399;border:1px solid #34d39940;
+  background:#e6f7f1;color:#00935c;border:1px solid #00935c40;
   border-radius:20px;font-size:.65rem;padding:.1rem .45rem;
 }}
 .date-label-spacer{{flex:1}}
@@ -671,7 +670,7 @@ body{{
   white-space:nowrap;line-height:1.4;
 }}
 .mark-read-btn:hover{{
-  background:#34d39918;color:#34d399;border-color:#34d39945;
+  background:#e6f7f1;color:#00935c;border-color:#00935c50;
 }}
 
 /* Per-category ✓ button in sidebar (shows on hover) */
@@ -685,21 +684,21 @@ body{{
   color:var(--text-muted);
 }}
 .cat-mark-btn:hover{{
-  color:#34d399 !important;background:#34d39918;
+  color:#00935c !important;background:#e6f7f1;
 }}
 
 /* Topbar action buttons */
 .topbar-btn{{
-  background:none;border:1px solid var(--border);
-  color:var(--text-muted);font-size:.78rem;font-weight:600;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.30);
+  color:#fff;font-size:.78rem;font-weight:600;
   padding:.35rem .85rem;border-radius:20px;cursor:pointer;
   transition:all .15s;white-space:nowrap;
 }}
-.topbar-btn:hover{{background:var(--surface2)}}
-.topbar-btn.green{{color:#34d399;border-color:#34d39940}}
-.topbar-btn.green:hover{{background:#34d39915}}
+.topbar-btn:hover{{background:rgba(255,255,255,.22)}}
+.topbar-btn.green{{color:#a7f3d0;border-color:rgba(167,243,208,.40)}}
+.topbar-btn.green:hover{{background:rgba(255,255,255,.18)}}
 .topbar-btn.active{{
-  background:#00935c20;color:var(--accent2);border-color:#00935c50;
+  background:rgba(255,255,255,.25);color:#fff;border-color:rgba(255,255,255,.60);
 }}
 
 /* "Solo non letti" in search row */
@@ -726,7 +725,7 @@ body{{
 /* Scrollbar */
 ::-webkit-scrollbar{{width:6px}}
 ::-webkit-scrollbar-track{{background:transparent}}
-::-webkit-scrollbar-thumb{{background:var(--border);border-radius:3px}}
+::-webkit-scrollbar-thumb{{background:#209f6f60;border-radius:3px}}
 
 /* Responsive */
 @media(max-width:768px){{
