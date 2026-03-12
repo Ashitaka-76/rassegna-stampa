@@ -439,16 +439,16 @@ def build_html(articles: list[dict]) -> str:
 /* ── RESET & BASE ─────────────────────────────────────────────────────────── */
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
 :root{{
-  --bg:         #0f172a;
-  --surface:    #1e293b;
-  --surface2:   #263144;
-  --border:     #334155;
-  --text:       #e2e8f0;
-  --text-muted: #94a3b8;
+  --bg:         #ffffff;
+  --surface:    #ffffff;
+  --surface2:   #f0faf6;
+  --border:     #209f6f;
+  --text:       #1a2e22;
+  --text-muted: #5f8a74;
   --accent:     #00935c;
-  --accent2:    #34c98a;
+  --accent2:    #00935c;
   --radius:     12px;
-  --shadow:     0 4px 24px rgba(0,0,0,.35);
+  --shadow:     0 4px 24px rgba(32,159,111,.14);
   --sidebar-w:  260px;
 }}
 html{{scroll-behavior:smooth}}
@@ -485,9 +485,9 @@ body{{
   padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600;
   background:var(--surface2);border:1px solid var(--border);
 }}
-.chip.today{{color:#34d399;border-color:#34d39940}}
-.chip.week{{color:#60a5fa;border-color:#60a5fa40}}
-.chip.total{{color:#34c98a;border-color:#34c98a40}}
+.chip.today{{color:#059669;border-color:#05966940}}
+.chip.week{{color:#2563eb;border-color:#2563eb40}}
+.chip.total{{color:#00935c;border-color:#00935c40}}
 
 /* ── LAYOUT ──────────────────────────────────────────────────────────────── */
 .layout{{
@@ -632,7 +632,7 @@ body{{
   font-size:.78rem;font-weight:600;color:var(--accent2);
   text-decoration:none;transition:color .15s;
 }}
-.read-more:hover{{color:#6de8b4}}
+.read-more:hover{{color:#007a4d}}
 
 /* Gruppi per data */
 .date-group{{margin-bottom:2rem}}
@@ -644,7 +644,7 @@ body{{
   display:flex;align-items:center;gap:.5rem;
 }}
 .date-today-badge{{
-  background:#34d39920;color:#34d399;border:1px solid #34d39940;
+  background:#e6f7f1;color:#00935c;border:1px solid #00935c40;
   border-radius:20px;font-size:.65rem;padding:.1rem .45rem;
 }}
 .date-label-spacer{{flex:1}}
@@ -671,7 +671,7 @@ body{{
   white-space:nowrap;line-height:1.4;
 }}
 .mark-read-btn:hover{{
-  background:#34d39918;color:#34d399;border-color:#34d39945;
+  background:#e6f7f1;color:#00935c;border-color:#00935c50;
 }}
 
 /* Per-category ✓ button in sidebar (shows on hover) */
@@ -685,7 +685,7 @@ body{{
   color:var(--text-muted);
 }}
 .cat-mark-btn:hover{{
-  color:#34d399 !important;background:#34d39918;
+  color:#00935c !important;background:#e6f7f1;
 }}
 
 /* Topbar action buttons */
@@ -696,8 +696,8 @@ body{{
   transition:all .15s;white-space:nowrap;
 }}
 .topbar-btn:hover{{background:var(--surface2)}}
-.topbar-btn.green{{color:#34d399;border-color:#34d39940}}
-.topbar-btn.green:hover{{background:#34d39915}}
+.topbar-btn.green{{color:#059669;border-color:#05966940}}
+.topbar-btn.green:hover{{background:#e6f7f1}}
 .topbar-btn.active{{
   background:#00935c20;color:var(--accent2);border-color:#00935c50;
 }}
@@ -726,7 +726,7 @@ body{{
 /* Scrollbar */
 ::-webkit-scrollbar{{width:6px}}
 ::-webkit-scrollbar-track{{background:transparent}}
-::-webkit-scrollbar-thumb{{background:var(--border);border-radius:3px}}
+::-webkit-scrollbar-thumb{{background:#209f6f60;border-radius:3px}}
 
 /* Responsive */
 @media(max-width:768px){{
