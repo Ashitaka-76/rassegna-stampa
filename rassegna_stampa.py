@@ -426,6 +426,18 @@ def build_html(articles: list[dict]) -> str:
     for a in articles:
         cat_counts[a["category"]] = cat_counts.get(a["category"], 0) + 1
 
+    # Remap nomi legacy → nuovi nomi per conteggio badge
+    _CAT_ALIASES = {
+        "Formazione": "Formazione & Sviluppo",
+        "Wellness":   "Wellness & Sport",
+        "Previdenza": "Previdenza & Pensione",
+    }
+    _remapped: dict[str, int] = {}
+    for k, v in cat_counts.items():
+        new_k = _CAT_ALIASES.get(k, k)
+        _remapped[new_k] = _remapped.get(new_k, 0) + v
+    cat_counts = _remapped
+
     # Costruisce timeline JSON per JS
     timeline_data = json.dumps(
         {d: {c: len(v) for c, v in cats.items()} for d, cats in by_date.items()},
@@ -554,7 +566,7 @@ def build_html(articles: list[dict]) -> str:
   --accent2:    #00935c;
   --radius:     12px;
   --shadow:     0 4px 24px rgba(32,159,111,.14);
-  --sidebar-w:  260px;
+  --sidebar-w:  280px;
 }}
 html{{scroll-behavior:smooth}}
 body{{
@@ -654,7 +666,7 @@ body{{
 .macro-header:hover{{background:var(--surface2);color:var(--text)}}
 .macro-header.active{{color:var(--accent);background:linear-gradient(135deg,#00935c15,#00935c08);border-color:#00935c30}}
 .macro-icon{{font-size:1rem;width:22px;text-align:center;flex-shrink:0}}
-.macro-label{{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.macro-label{{flex:1;line-height:1.3}}
 .macro-badge{{
   font-size:.65rem;font-weight:700;padding:.12rem .45rem;
   border-radius:20px;background:var(--border);color:var(--text-muted);
@@ -669,6 +681,14 @@ body{{
   transition:max-height .28s ease;
 }}
 .macro-items.open{{max-height:600px}}
+
+/* ── SIDEBAR RESIZE HANDLE ───────────────────────────────────────── */
+.sidebar-resize{{
+  position:fixed;top:160px;bottom:0;z-index:210;
+  left:var(--sidebar-w);width:6px;cursor:col-resize;
+  background:transparent;transition:background .15s;
+}}
+.sidebar-resize:hover,.sidebar-resize.dragging{{background:var(--border)}}
 
 /* Verticale badge */
 .vert-tag{{
@@ -937,6 +957,7 @@ body{{
       </select>
     </div>
   </nav>
+  <div class="sidebar-resize" id="sidebar-resize" title="Trascina per ridimensionare"></div>
 
   <!-- MAIN -->
   <main class="main" id="main-content">
@@ -971,6 +992,7 @@ body{{
 const ARTICLES = {arts_json};
 const CATEGORIES_LIST = {json.dumps(list(CATEGORIES.keys()))};
 const MACRO_CATS = {json.dumps({m["label"]: m["items"] for m in MACRO_CATEGORIES})};
+const CAT_ALIAS  = {{"Formazione":"Formazione & Sviluppo","Wellness":"Wellness & Sport","Previdenza":"Previdenza & Pensione"}};
 
 // ── STATO ────────────────────────────────────────────────────────────────────
 let activeCat   = null;
@@ -1109,7 +1131,8 @@ function refreshBadges() {{
   ARTICLES.forEach(a => {{
     if (a.pub_date < cutoff) return;
     if (!readIds.has(a.id)) {{
-      unread[a.category] = (unread[a.category] || 0) + 1;
+      const cat = CAT_ALIAS[a.category] || a.category;
+      unread[cat] = (unread[cat] || 0) + 1;
       totalUnread++;
     }}
   }});
@@ -1248,8 +1271,9 @@ function render() {{
 
   const filtered = ARTICLES.filter(a => {{
     if (a.pub_date < cutoff) return false;
-    if (activeCat && a.category !== activeCat) return false;
-    if (activeMacro && !(MACRO_CATS[activeMacro] || []).includes(a.category)) return false;
+    const aCat = CAT_ALIAS[a.category] || a.category;
+    if (activeCat && aCat !== activeCat) return false;
+    if (activeMacro && !(MACRO_CATS[activeMacro] || []).includes(aCat)) return false;
     if (onlyUnread && readIds.has(a.id)) return false;
     if (q && !(a.title.toLowerCase().includes(q)    ||
                a.abstract.toLowerCase().includes(q) ||
@@ -1373,6 +1397,48 @@ function filterSearch(q) {{
 // ── INIT ─────────────────────────────────────────────────────────────────────
 render();
 refreshBadges();
+
+// ── SIDEBAR RESIZE ────────────────────────────────────────────────────────────
+(function() {{
+  const handle = document.getElementById('sidebar-resize');
+  if (!handle) return;
+  const MIN_W = 180, MAX_W = 520;
+  let dragging = false, startX = 0, startW = 0;
+
+  function setWidth(w) {{
+    w = Math.min(MAX_W, Math.max(MIN_W, Math.round(w)));
+    document.documentElement.style.setProperty('--sidebar-w', w + 'px');
+    try {{ localStorage.setItem('rs_sidebar_w', w); }} catch(e) {{}}
+  }}
+
+  handle.addEventListener('mousedown', e => {{
+    dragging = true;
+    startX   = e.clientX;
+    startW   = parseFloat(getComputedStyle(document.documentElement)
+                 .getPropertyValue('--sidebar-w')) || 280;
+    handle.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'col-resize';
+    e.preventDefault();
+  }});
+  document.addEventListener('mousemove', e => {{
+    if (!dragging) return;
+    setWidth(startW + (e.clientX - startX));
+  }});
+  document.addEventListener('mouseup', () => {{
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove('dragging');
+    document.body.style.userSelect = '';
+    document.body.style.cursor = '';
+  }});
+
+  // Ripristina larghezza salvata
+  try {{
+    const saved = parseInt(localStorage.getItem('rs_sidebar_w'));
+    if (saved >= MIN_W && saved <= MAX_W) setWidth(saved);
+  }} catch(e) {{}}
+}})();
 </script>
 
 <div id="rs-toast"></div>
