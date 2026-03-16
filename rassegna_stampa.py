@@ -461,32 +461,30 @@ body{{
 /* ── TOPBAR ──────────────────────────────────────────────────────────────── */
 .topbar{{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  height:160px;background:#006b44;
-  border-bottom:2px solid #005236;
+  height:160px;background:#f5f5f5;
+  border-bottom:2px solid var(--border);
   display:flex;align-items:center;padding:0 1.5rem;gap:1rem;
   backdrop-filter:blur(10px);
 }}
 .logo{{
   font-size:1.15rem;font-weight:700;
-  -webkit-text-fill-color:#ffffff;color:#ffffff;
+  -webkit-text-fill-color:var(--text);color:var(--text);
   white-space:nowrap;
 }}
-.logo small{{font-size:.7rem;font-weight:400;display:block;
-  color:rgba(255,255,255,.7);-webkit-text-fill-color:rgba(255,255,255,.7);}}
 .topbar-spacer{{flex:1}}
 .topbar-logo{{
   height:144px;width:auto;object-fit:contain;
   margin-right:1.5rem;flex-shrink:0;
 }}
-.update-info{{font-size:.78rem;color:rgba(255,255,255,.7);text-align:right;line-height:1.4}}
+.update-info{{font-size:.78rem;color:var(--text-muted);text-align:right;line-height:1.4}}
 .stats-chips{{display:flex;gap:.5rem;align-items:center}}
 .chip{{
   padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600;
-  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.30);color:#fff;
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);
 }}
-.chip.today{{color:#a7f3d0;border-color:rgba(167,243,208,.40)}}
-.chip.week{{color:#bfdbfe;border-color:rgba(191,219,254,.40)}}
-.chip.total{{color:#ffffff;border-color:rgba(255,255,255,.40)}}
+.chip.today{{color:var(--accent);border-color:var(--border)}}
+.chip.week{{color:var(--accent);border-color:var(--border)}}
+.chip.total{{color:var(--text);border-color:var(--border)}}
 
 /* ── LAYOUT ──────────────────────────────────────────────────────────────── */
 .layout{{
@@ -689,16 +687,16 @@ body{{
 
 /* Topbar action buttons */
 .topbar-btn{{
-  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.30);
-  color:#fff;font-size:.78rem;font-weight:600;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);font-size:.78rem;font-weight:600;
   padding:.35rem .85rem;border-radius:20px;cursor:pointer;
   transition:all .15s;white-space:nowrap;
 }}
-.topbar-btn:hover{{background:rgba(255,255,255,.22)}}
-.topbar-btn.green{{color:#a7f3d0;border-color:rgba(167,243,208,.40)}}
-.topbar-btn.green:hover{{background:rgba(255,255,255,.18)}}
+.topbar-btn:hover{{background:var(--border);color:#fff}}
+.topbar-btn.green{{color:var(--accent);border-color:var(--border)}}
+.topbar-btn.green:hover{{background:var(--accent);color:#fff}}
 .topbar-btn.active{{
-  background:rgba(255,255,255,.25);color:#fff;border-color:rgba(255,255,255,.60);
+  background:var(--accent);color:#fff;border-color:var(--accent);
 }}
 
 /* "Solo non letti" in search row */
@@ -747,7 +745,6 @@ body{{
   {logo_tag}
   <div class="logo">
     📰 Rassegna Stampa
-    <small>Welfare · Wellbeing · Wellness</small>
   </div>
   <div class="topbar-spacer"></div>
   <div class="stats-chips">
