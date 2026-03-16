@@ -45,96 +45,178 @@ HTML_PATH = DATA_DIR / "rassegna.html"
 
 # ─── Categorie e keyword ──────────────────────────────────────────────────────
 CATEGORIES = {
+    # ── Crescita Personale ────────────────────────────────────────────
+    "Formazione & Sviluppo": {
+        "icon": "📚", "color": "#16a34a",
+        "keywords": [
+            "formazione dipendenti", "upskilling", "reskilling",
+            "sviluppo professionale", "lifelong learning", "academy aziendale",
+            "corporate learning", "formazione aziendale"
+        ]
+    },
+    "Coaching & Mentoring": {
+        "icon": "🎯", "color": "#0d9488",
+        "keywords": [
+            "coaching aziendale", "mentoring aziendale", "coaching dipendenti",
+            "mentor program", "business coaching", "executive coaching",
+            "leadership coaching"
+        ]
+    },
     "Welfare Aziendale": {
-        "icon": "🏢",
-        "color": "#4f46e5",
+        "icon": "🏢", "color": "#4f46e5", "verticale": True,
         "keywords": [
             "welfare aziendale", "welfare in azienda", "piano welfare",
             "flexible benefit", "welfare state", "welfare 4.0",
             "portale welfare", "piattaforma welfare"
         ]
     },
-    "Wellbeing": {
-        "icon": "💚",
-        "color": "#059669",
+    # ── Benessere Finanziario ────────────────────────────────────────
+    "Previdenza & Pensione": {
+        "icon": "🛡️", "color": "#64748b",
         "keywords": [
-            "wellbeing", "well-being", "benessere organizzativo",
-            "benessere dei lavoratori", "benessere aziendale",
-            "employee wellbeing", "people care"
-        ]
-    },
-    "Wellness": {
-        "icon": "🧘",
-        "color": "#0891b2",
-        "keywords": [
-            "wellness", "salute e benessere", "programmi wellness",
-            "wellness aziendale", "health wellness", "mental health lavoro",
-            "salute mentale lavoratori", "psicologia lavoro"
-        ]
-    },
-    "Smart Working": {
-        "icon": "💻",
-        "color": "#7c3aed",
-        "keywords": [
-            "smart working", "lavoro agile", "lavoro da remoto",
-            "telelavoro", "remote working", "hybrid work",
-            "lavoro ibrido", "accordo smart working"
-        ]
-    },
-    "Work-Life Balance": {
-        "icon": "⚖️",
-        "color": "#d97706",
-        "keywords": [
-            "work life balance", "work-life balance", "conciliazione lavoro",
-            "equilibrio vita lavoro", "qualità vita lavorativa",
-            "orario flessibile", "flessibilità oraria"
+            "previdenza complementare", "fondo pensione", "pensione integrativa",
+            "secondo pilastro", "tfr previdenza", "fondi pensione chiusi"
         ]
     },
     "Benefit & Fringe": {
-        "icon": "🎁",
-        "color": "#db2777",
+        "icon": "🎁", "color": "#db2777", "verticale": True,
         "keywords": [
             "fringe benefit", "benefit aziendali", "buoni pasto",
             "ticket restaurant", "rimborso spese", "auto aziendale",
             "polizza sanitaria dipendenti", "assicurazione sanitaria integrativa"
         ]
     },
-    "Previdenza": {
-        "icon": "🛡️",
-        "color": "#64748b",
+    "Rimborsi & Convenzioni": {
+        "icon": "💳", "color": "#9333ea",
         "keywords": [
-            "previdenza complementare", "fondo pensione", "pensione integrativa",
-            "secondo pilastro", "tfr previdenza", "fondi pensione chiusi"
+            "rimborso spese dipendenti", "convenzioni aziendali", "sconti dipendenti",
+            "accordi convenzionati", "rimborsi aziendali", "convenzione sanitaria"
         ]
     },
+    # ── Benessere Fisico ed Emotivo ──────────────────────────────────
     "Salute & Sicurezza": {
-        "icon": "🦺",
-        "color": "#dc2626",
+        "icon": "🦺", "color": "#dc2626",
         "keywords": [
             "salute sicurezza lavoro", "medicina del lavoro", "infortuni lavoro",
             "malattia professionale", "rischi professionali", "dlgs 81",
             "stress lavoro correlato", "burn-out"
         ]
     },
+    "Wellness & Sport": {
+        "icon": "🧘", "color": "#0891b2",
+        "keywords": [
+            "wellness", "salute e benessere", "programmi wellness",
+            "wellness aziendale", "health wellness", "sport aziendale",
+            "attività fisica dipendenti", "palestra aziendale"
+        ]
+    },
+    "Supporto Psicologico": {
+        "icon": "🧠", "color": "#8b5cf6",
+        "keywords": [
+            "supporto psicologico", "psicologia lavoro", "mental health lavoro",
+            "salute mentale lavoratori", "psicologo aziendale",
+            "assistenza psicologica dipendenti", "benessere psicologico"
+        ]
+    },
+    "Wellbeing": {
+        "icon": "💚", "color": "#059669", "verticale": True,
+        "keywords": [
+            "wellbeing", "well-being", "benessere organizzativo",
+            "benessere dei lavoratori", "benessere aziendale",
+            "employee wellbeing", "people care"
+        ]
+    },
+    # ── Eco & Mobilità ───────────────────────────────────────────────
+    "Mobilità Sostenibile": {
+        "icon": "🚲", "color": "#0369a1",
+        "keywords": [
+            "mobilità sostenibile", "bici aziendale", "auto elettrica aziendale",
+            "car pooling", "trasporto pubblico dipendenti", "abbonamento trasporti",
+            "bike to work", "mobilità aziendale"
+        ]
+    },
+    "Green Benefits": {
+        "icon": "🌱", "color": "#166534",
+        "keywords": [
+            "green benefit", "benefit ecologici", "sostenibilità aziendale dipendenti",
+            "esg benefit", "welfare green", "benefit ambientali", "sostenibilità hr"
+        ]
+    },
+    "Smart Working": {
+        "icon": "💻", "color": "#7c3aed", "verticale": True,
+        "keywords": [
+            "smart working", "lavoro agile", "lavoro da remoto",
+            "telelavoro", "remote working", "hybrid work",
+            "lavoro ibrido", "accordo smart working"
+        ]
+    },
+    # ── Supporto Quotidiano ──────────────────────────────────────────
+    "Work-Life Balance": {
+        "icon": "⚖️", "color": "#d97706", "verticale": True,
+        "keywords": [
+            "work life balance", "work-life balance", "conciliazione lavoro",
+            "equilibrio vita lavoro", "qualità vita lavorativa",
+            "orario flessibile", "flessibilità oraria"
+        ]
+    },
     "Inclusione & Diversity": {
-        "icon": "🌈",
-        "color": "#ea580c",
+        "icon": "🌈", "color": "#ea580c", "verticale": True,
         "keywords": [
             "diversity inclusion", "inclusione lavorativa", "pari opportunità",
             "gender gap azienda", "disabilità lavoro", "diversità aziendale",
             "gender pay gap", "donne lavoro parità"
         ]
     },
-    "Formazione": {
-        "icon": "📚",
-        "color": "#16a34a",
+    "Famiglia & Caregiving": {
+        "icon": "👨\u200d👩\u200d👧", "color": "#f59e0b",
         "keywords": [
-            "formazione dipendenti", "upskilling", "reskilling",
-            "sviluppo professionale", "lifelong learning", "academy aziendale",
-            "coaching aziendale", "corporate learning"
+            "caregiving", "congedo parentale", "asilo nido aziendale",
+            "cura anziani dipendenti", "genitorialità lavoro",
+            "maternità paternità aziendale", "welfare familiare"
+        ]
+    },
+    "Servizi alla Persona": {
+        "icon": "🛎️", "color": "#6366f1",
+        "keywords": [
+            "servizi alla persona", "concierge aziendale",
+            "assistenza domiciliare dipendenti", "servizi welfare persona",
+            "servizi dipendenti aziendali"
         ]
     },
 }
+
+MACRO_CATEGORIES = [
+    {
+        "label": "Crescita Personale",
+        "icon":  "🌟",
+        "color": "#16a34a",
+        "items": ["Formazione & Sviluppo", "Coaching & Mentoring"],
+    },
+    {
+        "label": "Benessere Finanziario",
+        "icon":  "💰",
+        "color": "#db2777",
+        "items": ["Previdenza & Pensione", "Benefit & Fringe", "Rimborsi & Convenzioni"],
+    },
+    {
+        "label": "Benessere Fisico ed Emotivo",
+        "icon":  "💚",
+        "color": "#059669",
+        "items": ["Salute & Sicurezza", "Wellness & Sport", "Supporto Psicologico", "Wellbeing", "Welfare Aziendale"],
+    },
+    {
+        "label": "Eco & Mobilità",
+        "icon":  "🌍",
+        "color": "#0369a1",
+        "items": ["Mobilità Sostenibile", "Green Benefits", "Smart Working"],
+    },
+    {
+        "label": "Supporto Quotidiano",
+        "icon":  "🤝",
+        "color": "#d97706",
+        "items": ["Work-Life Balance", "Inclusione & Diversity", "Famiglia & Caregiving", "Servizi alla Persona", "Welfare Aziendale"],
+    },
+]
 
 # ─── Fonti RSS ────────────────────────────────────────────────────────────────
 RSS_SOURCES = [
@@ -191,6 +273,25 @@ def init_db():
     """)
     conn.execute("CREATE INDEX IF NOT EXISTS idx_date ON articles(pub_date)")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_cat  ON articles(category)")
+    conn.commit()
+    conn.close()
+
+def migrate_categories():
+    """Rinomina nel DB le categorie legacy con i nuovi nomi (migrazione one-shot)."""
+    _RENAMES = {
+        "Formazione":        "Formazione & Sviluppo",
+        "Wellness":          "Wellness & Sport",
+        "Previdenza":        "Previdenza & Pensione",
+        "Salute e Sicurezza": "Salute & Sicurezza",
+        "Inclusione":        "Inclusione & Diversity",
+    }
+    conn = sqlite3.connect(DB_PATH)
+    for old, new in _RENAMES.items():
+        n = conn.execute(
+            "UPDATE articles SET category = ? WHERE category = ?", (new, old)
+        ).rowcount
+        if n:
+            print(f"  ↳ Migrazione categoria: '{old}' → '{new}' ({n} articoli)")
     conn.commit()
     conn.close()
 
@@ -344,6 +445,18 @@ def build_html(articles: list[dict]) -> str:
     for a in articles:
         cat_counts[a["category"]] = cat_counts.get(a["category"], 0) + 1
 
+    # Remap nomi legacy → nuovi nomi per conteggio badge
+    _CAT_ALIASES = {
+        "Formazione": "Formazione & Sviluppo",
+        "Wellness":   "Wellness & Sport",
+        "Previdenza": "Previdenza & Pensione",
+    }
+    _remapped: dict[str, int] = {}
+    for k, v in cat_counts.items():
+        new_k = _CAT_ALIASES.get(k, k)
+        _remapped[new_k] = _remapped.get(new_k, 0) + v
+    cat_counts = _remapped
+
     # Costruisce timeline JSON per JS
     timeline_data = json.dumps(
         {d: {c: len(v) for c, v in cats.items()} for d, cats in by_date.items()},
@@ -361,23 +474,43 @@ def build_html(articles: list[dict]) -> str:
     def cat_icon(cat):
         return CATEGORIES.get(cat, {}).get("icon", "📰")
 
-    # Sidebar items (badge inizialmente mostra totale; JS aggiornerà a non-letti)
+    # Sidebar items – struttura gerarchica a due livelli
     def cat_slug(s):
         return re.sub(r'[^a-z0-9]', '-', s.lower()).strip('-')
 
-    sidebar_items = '\n'.join(
-        f'<li class="nav-item" data-cat="{cat}" onclick="filterCat(this)">'
-        f'  <span class="nav-icon">{info["icon"]}</span>'
-        f'  <span class="nav-label">{cat}</span>'
-        f'  <span class="nav-badge" id="badge-{cat_slug(cat)}" style="background:{info["color"]}">'
-        f'    {cat_counts.get(cat, 0)}</span>'
-        f'  <button class="cat-mark-btn"'
-        f'          title="Segna tutto letto: {cat}"'
-        f'          onclick="event.stopPropagation();markAllRead(&quot;{cat}&quot;,null)">'
-        f'    ✓</button>'
-        f'</li>'
-        for cat, info in CATEGORIES.items()
-    )
+    sidebar_items = ''
+    for macro in MACRO_CATEGORIES:
+        macro_total = sum(cat_counts.get(c, 0) for c in macro["items"])
+        ms = cat_slug(macro["label"])
+        items_html = ''
+        for cat in macro["items"]:
+            info = CATEGORIES.get(cat, {})
+            items_html += (
+                f'<li class="nav-item" data-cat="{cat}" onclick="filterCat(this)">'
+                f'  <span class="nav-icon">{info.get("icon","📰")}</span>'
+                f'  <span class="nav-label">{cat}</span>'
+                f'  <span class="nav-badge" id="badge-{cat_slug(cat)}"'
+                f'        style="background:{info.get("color","#64748b")}">'
+                f'    {cat_counts.get(cat, 0)}</span>'
+                f'  <button class="cat-mark-btn"'
+                f'          title="Segna tutto letto: {cat}"'
+                f'          onclick="event.stopPropagation();markAllRead(&quot;{cat}&quot;,null)">'
+                f'    ✓</button>'
+                f'</li>'
+            )
+        sidebar_items += (
+            f'<div class="macro-group" id="macro-{ms}">'
+            f'  <div class="macro-header" onclick="toggleMacro(this,\'{macro["label"]}\')">'
+            f'    <span class="macro-icon">{macro["icon"]}</span>'
+            f'    <span class="macro-label">{macro["label"]}</span>'
+            f'    <span class="macro-badge" id="mbadge-{ms}">{macro_total}</span>'
+            f'    <span class="macro-chevron">▾</span>'
+            f'  </div>'
+            f'  <ul class="macro-items" id="mitems-{ms}">'
+            f'    {items_html}'
+            f'  </ul>'
+            f'</div>'
+        )
 
     # Genera cards
     def render_article(a):
@@ -449,7 +582,7 @@ def build_html(articles: list[dict]) -> str:
   --accent2:    #00935c;
   --radius:     12px;
   --shadow:     0 4px 24px rgba(32,159,111,.14);
-  --sidebar-w:  260px;
+  --sidebar-w:  280px;
 }}
 html{{scroll-behavior:smooth}}
 body{{
@@ -461,32 +594,30 @@ body{{
 /* ── TOPBAR ──────────────────────────────────────────────────────────────── */
 .topbar{{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  height:160px;background:#006b44;
-  border-bottom:2px solid #005236;
+  height:160px;background:#f5f5f5;
+  border-bottom:2px solid var(--border);
   display:flex;align-items:center;padding:0 1.5rem;gap:1rem;
   backdrop-filter:blur(10px);
 }}
 .logo{{
   font-size:1.15rem;font-weight:700;
-  -webkit-text-fill-color:#ffffff;color:#ffffff;
+  -webkit-text-fill-color:var(--text);color:var(--text);
   white-space:nowrap;
 }}
-.logo small{{font-size:.7rem;font-weight:400;display:block;
-  color:rgba(255,255,255,.7);-webkit-text-fill-color:rgba(255,255,255,.7);}}
 .topbar-spacer{{flex:1}}
 .topbar-logo{{
   height:144px;width:auto;object-fit:contain;
   margin-right:1.5rem;flex-shrink:0;
 }}
-.update-info{{font-size:.78rem;color:rgba(255,255,255,.7);text-align:right;line-height:1.4}}
+.update-info{{font-size:.78rem;color:var(--text-muted);text-align:right;line-height:1.4}}
 .stats-chips{{display:flex;gap:.5rem;align-items:center}}
 .chip{{
   padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600;
-  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.30);color:#fff;
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);
 }}
-.chip.today{{color:#a7f3d0;border-color:rgba(167,243,208,.40)}}
-.chip.week{{color:#bfdbfe;border-color:rgba(191,219,254,.40)}}
-.chip.total{{color:#ffffff;border-color:rgba(255,255,255,.40)}}
+.chip.today{{color:var(--accent);border-color:var(--border)}}
+.chip.week{{color:var(--accent);border-color:var(--border)}}
+.chip.total{{color:var(--text);border-color:var(--border)}}
 
 /* ── LAYOUT ──────────────────────────────────────────────────────────────── */
 .layout{{
@@ -537,6 +668,44 @@ body{{
   letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);
   margin-top:.75rem;
 }}
+
+/* ── MACRO GROUPS ────────────────────────────────────────────────── */
+.macro-group{{margin-bottom:.15rem}}
+.macro-header{{
+  display:flex;align-items:center;gap:.55rem;
+  padding:.55rem .85rem;border-radius:8px;cursor:pointer;
+  font-size:.82rem;font-weight:700;color:var(--text-muted);
+  transition:background .15s,color .15s;
+  border:1px solid transparent;
+  user-select:none;
+}}
+.macro-header:hover{{background:var(--surface2);color:var(--text)}}
+.macro-header.active{{color:var(--accent);background:linear-gradient(135deg,#00935c15,#00935c08);border-color:#00935c30}}
+.macro-icon{{font-size:1rem;width:22px;text-align:center;flex-shrink:0}}
+.macro-label{{flex:1;line-height:1.3}}
+.macro-badge{{
+  font-size:.65rem;font-weight:700;padding:.12rem .45rem;
+  border-radius:20px;background:#00935c;color:#fff;
+  min-width:20px;text-align:center;flex-shrink:0;
+}}
+.macro-chevron{{font-size:.7rem;color:var(--text-muted);transition:transform .22s;flex-shrink:0}}
+.macro-header.open .macro-chevron{{transform:rotate(180deg)}}
+.macro-items{{
+  list-style:none;padding-left:.6rem;
+  display:flex;flex-direction:column;gap:.1rem;
+  max-height:0;overflow:hidden;
+  transition:max-height .28s ease;
+}}
+.macro-items.open{{max-height:600px}}
+
+/* ── SIDEBAR RESIZE HANDLE ───────────────────────────────────────── */
+.sidebar-resize{{
+  position:fixed;top:160px;bottom:0;z-index:210;
+  left:var(--sidebar-w);width:6px;cursor:col-resize;
+  background:transparent;transition:background .15s;
+}}
+.sidebar-resize:hover,.sidebar-resize.dragging{{background:var(--border)}}
+
 
 /* Calendario storico */
 .date-picker-wrap{{padding:.5rem .75rem 0}}
@@ -689,16 +858,16 @@ body{{
 
 /* Topbar action buttons */
 .topbar-btn{{
-  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.30);
-  color:#fff;font-size:.78rem;font-weight:600;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);font-size:.78rem;font-weight:600;
   padding:.35rem .85rem;border-radius:20px;cursor:pointer;
   transition:all .15s;white-space:nowrap;
 }}
-.topbar-btn:hover{{background:rgba(255,255,255,.22)}}
-.topbar-btn.green{{color:#a7f3d0;border-color:rgba(167,243,208,.40)}}
-.topbar-btn.green:hover{{background:rgba(255,255,255,.18)}}
+.topbar-btn:hover{{background:var(--border);color:#fff}}
+.topbar-btn.green{{color:var(--accent);border-color:var(--border)}}
+.topbar-btn.green:hover{{background:var(--accent);color:#fff}}
 .topbar-btn.active{{
-  background:rgba(255,255,255,.25);color:#fff;border-color:rgba(255,255,255,.60);
+  background:var(--accent);color:#fff;border-color:var(--accent);
 }}
 
 /* "Solo non letti" in search row */
@@ -747,7 +916,6 @@ body{{
   {logo_tag}
   <div class="logo">
     📰 Rassegna Stampa
-    <small>Welfare · Wellbeing · Wellness</small>
   </div>
   <div class="topbar-spacer"></div>
   <div class="stats-chips">
@@ -783,9 +951,9 @@ body{{
               onclick="markAllRead(null,null)" style="color:var(--text-muted)">✓</button>
     </div>
 
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:.2rem">
+    <div id="nav-groups">
       {sidebar_items}
-    </ul>
+    </div>
 
     <div class="sidebar-section">Storico</div>
     <div class="date-picker-wrap">
@@ -798,6 +966,7 @@ body{{
       </select>
     </div>
   </nav>
+  <div class="sidebar-resize" id="sidebar-resize" title="Trascina per ridimensionare"></div>
 
   <!-- MAIN -->
   <main class="main" id="main-content">
@@ -831,12 +1000,15 @@ body{{
 // ── DATI EMBEDDED ────────────────────────────────────────────────────────────
 const ARTICLES = {arts_json};
 const CATEGORIES_LIST = {json.dumps(list(CATEGORIES.keys()))};
+const MACRO_CATS = {json.dumps({m["label"]: m["items"] for m in MACRO_CATEGORIES})};
+const CAT_ALIAS  = {{"Formazione":"Formazione & Sviluppo","Wellness":"Wellness & Sport","Previdenza":"Previdenza & Pensione"}};
 
 // ── STATO ────────────────────────────────────────────────────────────────────
 let activeCat   = null;
 let activeDays  = 90;
 let searchQuery = "";
 let onlyUnread  = false;
+let activeMacro = null;
 
 // ── READ STATE (localStorage) ────────────────────────────────────────────────
 const READ_KEY = 'rassegna_read_v1';
@@ -935,8 +1107,11 @@ function markAllRead(cat, date) {{
 
 // Segna ciò che è attualmente visibile (rispetta filtro categoria)
 function markVisibleRead() {{
-  markAllRead(activeCat, null);
-  // Aggiorna testo pulsante topbar brevemente
+  if (activeMacro && !activeCat) {{
+    (MACRO_CATS[activeMacro] || []).forEach(c => markAllRead(c, null));
+  }} else {{
+    markAllRead(activeCat, null);
+  }}
   const btn = document.getElementById('mark-all-btn');
   if (btn) {{
     const prev = btn.textContent;
@@ -965,7 +1140,8 @@ function refreshBadges() {{
   ARTICLES.forEach(a => {{
     if (a.pub_date < cutoff) return;
     if (!readIds.has(a.id)) {{
-      unread[a.category] = (unread[a.category] || 0) + 1;
+      const cat = CAT_ALIAS[a.category] || a.category;
+      unread[cat] = (unread[cat] || 0) + 1;
       totalUnread++;
     }}
   }});
@@ -983,6 +1159,15 @@ function refreshBadges() {{
     badgeAll.textContent = totalUnread;
     badgeAll.style.opacity = totalUnread > 0 ? '1' : '0.3';
   }}
+  // Aggiorna badge macro-group
+  Object.entries(MACRO_CATS).forEach(([label, cats]) => {{
+    const ms = label.toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+    const mbadge = document.getElementById('mbadge-' + ms);
+    if (!mbadge) return;
+    const n = cats.reduce((sum, c) => sum + (unread[c] || 0), 0);
+    mbadge.textContent = n;
+    mbadge.style.opacity = n > 0 ? '1' : '0.3';
+  }});
 }}
 
 // ── TOAST ────────────────────────────────────────────────────────────────────
@@ -1021,16 +1206,27 @@ function esc(s) {{
 
 // ── RENDER ───────────────────────────────────────────────────────────────────
 const CAT_INFO = {{
-  "Welfare Aziendale":      {{icon:"🏢", color:"#4f46e5"}},
-  "Wellbeing":              {{icon:"💚", color:"#059669"}},
-  "Wellness":               {{icon:"🧘", color:"#0891b2"}},
-  "Smart Working":          {{icon:"💻", color:"#7c3aed"}},
-  "Work-Life Balance":      {{icon:"⚖️", color:"#d97706"}},
-  "Benefit & Fringe":       {{icon:"🎁", color:"#db2777"}},
-  "Previdenza":             {{icon:"🛡️", color:"#64748b"}},
-  "Salute & Sicurezza":     {{icon:"🦺", color:"#dc2626"}},
-  "Inclusione & Diversity": {{icon:"🌈", color:"#ea580c"}},
-  "Formazione":             {{icon:"📚", color:"#16a34a"}},
+  "Formazione & Sviluppo":    {{icon:"📚", color:"#16a34a"}},
+  "Coaching & Mentoring":     {{icon:"🎯", color:"#0d9488"}},
+  "Welfare Aziendale":        {{icon:"🏢", color:"#4f46e5"}},
+  "Previdenza & Pensione":    {{icon:"🛡️", color:"#64748b"}},
+  "Benefit & Fringe":         {{icon:"🎁", color:"#db2777"}},
+  "Rimborsi & Convenzioni":   {{icon:"💳", color:"#9333ea"}},
+  "Salute & Sicurezza":       {{icon:"🦺", color:"#dc2626"}},
+  "Wellness & Sport":         {{icon:"🧘", color:"#0891b2"}},
+  "Supporto Psicologico":     {{icon:"🧠", color:"#8b5cf6"}},
+  "Wellbeing":                {{icon:"💚", color:"#059669"}},
+  "Mobilità Sostenibile":     {{icon:"🚲", color:"#0369a1"}},
+  "Green Benefits":           {{icon:"🌱", color:"#166534"}},
+  "Smart Working":            {{icon:"💻", color:"#7c3aed"}},
+  "Work-Life Balance":        {{icon:"⚖️", color:"#d97706"}},
+  "Inclusione & Diversity":   {{icon:"🌈", color:"#ea580c"}},
+  "Famiglia & Caregiving":    {{icon:"👨‍👩‍👧", color:"#f59e0b"}},
+  "Servizi alla Persona":     {{icon:"🛎️", color:"#6366f1"}},
+  /* backward compat for old DB records */
+  "Formazione":               {{icon:"📚", color:"#16a34a"}},
+  "Wellness":                 {{icon:"🧘", color:"#0891b2"}},
+  "Previdenza":               {{icon:"🛡️", color:"#64748b"}},
 }};
 
 function cardHtml(a, readIds) {{
@@ -1084,7 +1280,9 @@ function render() {{
 
   const filtered = ARTICLES.filter(a => {{
     if (a.pub_date < cutoff) return false;
-    if (activeCat && a.category !== activeCat) return false;
+    const aCat = CAT_ALIAS[a.category] || a.category;
+    if (activeCat && aCat !== activeCat) return false;
+    if (activeMacro && !(MACRO_CATS[activeMacro] || []).includes(aCat)) return false;
     if (onlyUnread && readIds.has(a.id)) return false;
     if (q && !(a.title.toLowerCase().includes(q)    ||
                a.abstract.toLowerCase().includes(q) ||
@@ -1138,17 +1336,57 @@ function render() {{
 // ── FILTRI ────────────────────────────────────────────────────────────────────
 function filterCat(el) {{
   document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.querySelectorAll(".macro-header").forEach(h => h.classList.remove("active"));
   if (el === null) {{
-    activeCat = null;
+    activeCat   = null;
+    activeMacro = null;
   }} else {{
     el.classList.add("active");
-    activeCat = el.dataset.cat;
+    activeCat   = el.dataset.cat;
+    activeMacro = null;
+    // Espandi il macro-group padre
+    const macroItems = el.closest('.macro-items');
+    if (macroItems) {{
+      macroItems.classList.add('open');
+      const hdr = macroItems.previousElementSibling;
+      if (hdr) hdr.classList.add('open');
+    }}
   }}
-  // Aggiorna testo pulsante "Segna tutto letto"
   const btn = document.getElementById('mark-all-btn');
   if (btn) {{
     btn.textContent = activeCat
       ? `✓ Segna "${{activeCat}}" letta`
+      : '✓ Segna tutto letto';
+  }}
+  render();
+}}
+
+function toggleMacro(el, macroLabel) {{
+  const group    = el.closest('.macro-group');
+  const itemsEl  = group.querySelector('.macro-items');
+  const isOpen   = itemsEl.classList.contains('open');
+  const isActive = activeMacro === macroLabel;
+
+  // Toggle accordion
+  itemsEl.classList.toggle('open', !isOpen);
+  el.classList.toggle('open', !isOpen);
+
+  // Toggle macro filter
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.querySelectorAll(".macro-header").forEach(h => h.classList.remove("active"));
+  if (isActive) {{
+    activeMacro = null;
+    activeCat   = null;
+  }} else {{
+    activeMacro = macroLabel;
+    activeCat   = null;
+    el.classList.add('active');
+  }}
+
+  const btn = document.getElementById('mark-all-btn');
+  if (btn) {{
+    btn.textContent = activeMacro
+      ? `✓ Segna "${{activeMacro}}" letta`
       : '✓ Segna tutto letto';
   }}
   render();
@@ -1168,6 +1406,48 @@ function filterSearch(q) {{
 // ── INIT ─────────────────────────────────────────────────────────────────────
 render();
 refreshBadges();
+
+// ── SIDEBAR RESIZE ────────────────────────────────────────────────────────────
+(function() {{
+  const handle = document.getElementById('sidebar-resize');
+  if (!handle) return;
+  const MIN_W = 180, MAX_W = 520;
+  let dragging = false, startX = 0, startW = 0;
+
+  function setWidth(w) {{
+    w = Math.min(MAX_W, Math.max(MIN_W, Math.round(w)));
+    document.documentElement.style.setProperty('--sidebar-w', w + 'px');
+    try {{ localStorage.setItem('rs_sidebar_w', w); }} catch(e) {{}}
+  }}
+
+  handle.addEventListener('mousedown', e => {{
+    dragging = true;
+    startX   = e.clientX;
+    startW   = parseFloat(getComputedStyle(document.documentElement)
+                 .getPropertyValue('--sidebar-w')) || 280;
+    handle.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'col-resize';
+    e.preventDefault();
+  }});
+  document.addEventListener('mousemove', e => {{
+    if (!dragging) return;
+    setWidth(startW + (e.clientX - startX));
+  }});
+  document.addEventListener('mouseup', () => {{
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove('dragging');
+    document.body.style.userSelect = '';
+    document.body.style.cursor = '';
+  }});
+
+  // Ripristina larghezza salvata
+  try {{
+    const saved = parseInt(localStorage.getItem('rs_sidebar_w'));
+    if (saved >= MIN_W && saved <= MAX_W) setWidth(saved);
+  }} catch(e) {{}}
+}})();
 </script>
 
 <div id="rs-toast"></div>
@@ -1183,6 +1463,7 @@ def main():
     print()
 
     init_db()
+    migrate_categories()   # rinomina categorie legacy nel DB (idempotente)
 
     # Controlla se aggiornare (non più vecchio di 4 ore)
     conn = sqlite3.connect(DB_PATH)
