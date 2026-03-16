@@ -190,7 +190,7 @@ MACRO_CATEGORIES = [
         "label": "Crescita Personale",
         "icon":  "🌟",
         "color": "#16a34a",
-        "items": ["Formazione & Sviluppo", "Coaching & Mentoring", "Welfare Aziendale"],
+        "items": ["Formazione & Sviluppo", "Coaching & Mentoring"],
     },
     {
         "label": "Benessere Finanziario",
@@ -202,7 +202,7 @@ MACRO_CATEGORIES = [
         "label": "Benessere Fisico ed Emotivo",
         "icon":  "💚",
         "color": "#059669",
-        "items": ["Salute & Sicurezza", "Wellness & Sport", "Supporto Psicologico", "Wellbeing"],
+        "items": ["Salute & Sicurezza", "Wellness & Sport", "Supporto Psicologico", "Wellbeing", "Welfare Aziendale"],
     },
     {
         "label": "Eco & Mobilità",
@@ -214,7 +214,7 @@ MACRO_CATEGORIES = [
         "label": "Supporto Quotidiano",
         "icon":  "🤝",
         "color": "#d97706",
-        "items": ["Work-Life Balance", "Inclusione & Diversity", "Famiglia & Caregiving", "Servizi alla Persona"],
+        "items": ["Work-Life Balance", "Inclusione & Diversity", "Famiglia & Caregiving", "Servizi alla Persona", "Welfare Aziendale"],
     },
 ]
 
@@ -485,13 +485,10 @@ def build_html(articles: list[dict]) -> str:
         items_html = ''
         for cat in macro["items"]:
             info = CATEGORIES.get(cat, {})
-            is_vert = info.get("verticale", False)
-            vert_tag = '<span class="vert-tag">verticale</span>' if is_vert else ''
             items_html += (
                 f'<li class="nav-item" data-cat="{cat}" onclick="filterCat(this)">'
                 f'  <span class="nav-icon">{info.get("icon","📰")}</span>'
                 f'  <span class="nav-label">{cat}</span>'
-                f'  {vert_tag}'
                 f'  <span class="nav-badge" id="badge-{cat_slug(cat)}"'
                 f'        style="background:{info.get("color","#64748b")}">'
                 f'    {cat_counts.get(cat, 0)}</span>'
@@ -709,13 +706,6 @@ body{{
 }}
 .sidebar-resize:hover,.sidebar-resize.dragging{{background:var(--border)}}
 
-/* Verticale badge */
-.vert-tag{{
-  font-size:.56rem;font-weight:700;padding:.08rem .32rem;
-  border-radius:4px;background:#4f46e518;color:#4f46e5;
-  border:1px solid #4f46e535;white-space:nowrap;
-  letter-spacing:.04em;text-transform:uppercase;flex-shrink:0;
-}}
 
 /* Calendario storico */
 .date-picker-wrap{{padding:.5rem .75rem 0}}
