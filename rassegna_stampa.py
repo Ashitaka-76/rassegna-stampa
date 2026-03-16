@@ -276,6 +276,25 @@ def init_db():
     conn.commit()
     conn.close()
 
+def migrate_categories():
+    """Rinomina nel DB le categorie legacy con i nuovi nomi (migrazione one-shot)."""
+    _RENAMES = {
+        "Formazione":        "Formazione & Sviluppo",
+        "Wellness":          "Wellness & Sport",
+        "Previdenza":        "Previdenza & Pensione",
+        "Salute e Sicurezza": "Salute & Sicurezza",
+        "Inclusione":        "Inclusione & Diversity",
+    }
+    conn = sqlite3.connect(DB_PATH)
+    for old, new in _RENAMES.items():
+        n = conn.execute(
+            "UPDATE articles SET category = ? WHERE category = ?", (new, old)
+        ).rowcount
+        if n:
+            print(f"  ↳ Migrazione categoria: '{old}' → '{new}' ({n} articoli)")
+    conn.commit()
+    conn.close()
+
 def article_id(url: str, title: str) -> str:
     return hashlib.md5(f"{url}{title}".encode()).hexdigest()
 
@@ -669,7 +688,7 @@ body{{
 .macro-label{{flex:1;line-height:1.3}}
 .macro-badge{{
   font-size:.65rem;font-weight:700;padding:.12rem .45rem;
-  border-radius:20px;background:var(--border);color:var(--text-muted);
+  border-radius:20px;background:#00935c;color:#fff;
   min-width:20px;text-align:center;flex-shrink:0;
 }}
 .macro-chevron{{font-size:.7rem;color:var(--text-muted);transition:transform .22s;flex-shrink:0}}
@@ -1454,6 +1473,7 @@ def main():
     print()
 
     init_db()
+    migrate_categories()   # rinomina categorie legacy nel DB (idempotente)
 
     # Controlla se aggiornare (non più vecchio di 4 ore)
     conn = sqlite3.connect(DB_PATH)
