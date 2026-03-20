@@ -10,9 +10,12 @@ Avvia lo script per aggiornare le notizie e aprire il report.
 Non richiede alcun server web.
 """
 
-import os, sys, sqlite3, webbrowser, hashlib, re, json, time
+import os, sys, sqlite3, webbrowser, hashlib, re, json, time, threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from datetime import datetime, timedelta
 from pathlib import Path
+
+PORT = 8765   # porta del mini server locale
 
 # ─── Auto-install dipendenze ─────────────────────────────────────────────────
 def _ensure(pip_name, import_name=None):
@@ -196,13 +199,13 @@ MACRO_CATEGORIES = [
         "label": "Benessere Finanziario",
         "icon":  "💰",
         "color": "#db2777",
-        "items": ["Previdenza & Pensione", "Benefit & Fringe", "Rimborsi & Convenzioni"],
+        "items": ["Welfare Aziendale", "Previdenza & Pensione", "Benefit & Fringe", "Rimborsi & Convenzioni"],
     },
     {
         "label": "Benessere Fisico ed Emotivo",
         "icon":  "💚",
         "color": "#059669",
-        "items": ["Salute & Sicurezza", "Wellness & Sport", "Supporto Psicologico", "Wellbeing", "Welfare Aziendale"],
+        "items": ["Salute & Sicurezza", "Wellness & Sport", "Supporto Psicologico", "Wellbeing"],
     },
     {
         "label": "Eco & Mobilità",
@@ -866,6 +869,9 @@ body{{
 .topbar-btn:hover{{background:var(--border);color:#fff}}
 .topbar-btn.green{{color:var(--accent);border-color:var(--border)}}
 .topbar-btn.green:hover{{background:var(--accent);color:#fff}}
+.topbar-btn.blue{{color:#0369a1;border-color:#0369a140}}
+.topbar-btn.blue:hover{{background:#0369a1;color:#fff}}
+.topbar-btn.blue:disabled{{opacity:.5;cursor:not-allowed}}
 .topbar-btn.active{{
   background:var(--accent);color:#fff;border-color:var(--accent);
 }}
@@ -923,6 +929,10 @@ body{{
     <span class="chip week">7gg: {week_count}</span>
     <span class="chip total">Totale: {total_count}</span>
   </div>
+  <button class="topbar-btn blue" id="refresh-btn" onclick="refreshNews()"
+          title="Scarica le ultime notizie dai feed RSS">
+    🔄 Aggiorna notizie
+  </button>
   <button class="topbar-btn" id="only-unread-btn" onclick="toggleOnlyUnread()"
           title="Mostra solo le notizie non ancora lette">
     👁 Solo non letti
@@ -1403,6 +1413,42 @@ function filterSearch(q) {{
   render();
 }}
 
+// ── AGGIORNA NOTIZIE ─────────────────────────────────────────────────────────
+async function refreshNews() {{
+  const btn = document.getElementById('refresh-btn');
+  if (!btn || btn.disabled) return;
+  btn.disabled = true;
+  const orig = btn.innerHTML;
+  let dot = 0;
+  const spin = setInterval(() => {{
+    dot = (dot + 1) % 4;
+    btn.textContent = 'Aggiornamento' + '.'.repeat(dot + 1);
+  }}, 450);
+
+  try {{
+    const resp = await fetch('/api/refresh');
+    clearInterval(spin);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (data.ok) {{
+      btn.innerHTML = `✓ ${{data.count}} articoli`;
+      showToast(`✓ Aggiornamento completato — ${{data.count}} articoli · ricarico la pagina…`);
+      setTimeout(() => window.location.reload(), 1200);
+    }} else {{
+      throw new Error(data.error || 'Errore sconosciuto');
+    }}
+  }} catch(e) {{
+    clearInterval(spin);
+    btn.disabled = false;
+    btn.innerHTML = orig;
+    if (e.message.includes('Failed to fetch') || e.message.includes('NetworkError')) {{
+      showToast('⚠ Server non raggiungibile. Riavvia rassegna_stampa.py');
+    }} else {{
+      showToast('⚠ Errore: ' + e.message);
+    }}
+  }}
+}}
+
 // ── INIT ─────────────────────────────────────────────────────────────────────
 render();
 refreshBadges();
@@ -1454,6 +1500,67 @@ refreshBadges();
 </body>
 </html>'''
 
+# ─── MINI HTTP SERVER ────────────────────────────────────────────────────────
+class _Handler(BaseHTTPRequestHandler):
+    """Gestisce GET / (serve HTML) e GET /api/refresh (aggiorna notizie)."""
+
+    def log_message(self, fmt, *args):
+        pass  # silenzioso in console
+
+    def _send_json(self, data: dict, status: int = 200):
+        body = json.dumps(data, ensure_ascii=False).encode()
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_GET(self):
+        if self.path == "/api/refresh":
+            self._handle_refresh()
+        else:
+            self._serve_html()
+
+    def _serve_html(self):
+        try:
+            body = HTML_PATH.read_bytes()
+        except FileNotFoundError:
+            body = b"<p>Generazione in corso, ricarica tra qualche secondo&hellip;</p>"
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _handle_refresh(self):
+        try:
+            refresh_news()
+            arts = load_articles(days_back=90)
+            html = build_html(arts)
+            HTML_PATH.write_text(html, encoding="utf-8")
+            self._send_json({
+                "ok": True,
+                "count": len(arts),
+                "ts": datetime.now().strftime("%d/%m/%Y %H:%M"),
+            })
+            print(f"  ✓ Refresh completato — {len(arts)} articoli "
+                  f"({datetime.now().strftime('%H:%M')})")
+        except Exception as exc:
+            self._send_json({"ok": False, "error": str(exc)}, 500)
+            print(f"  ⚠ Errore durante il refresh: {exc}")
+
+
+def _start_server() -> HTTPServer:
+    """Prova PORT; se occupata, prova le successive finché ne trova una libera."""
+    for p in range(PORT, PORT + 20):
+        try:
+            srv = HTTPServer(("localhost", p), _Handler)
+            return srv
+        except OSError:
+            continue
+    raise RuntimeError("Nessuna porta disponibile nel range 8765-8784")
+
+
 # ─── MAIN ─────────────────────────────────────────────────────────────────────
 def main():
     print("=" * 58)
@@ -1495,15 +1602,29 @@ def main():
 
     html = build_html(articles)
     HTML_PATH.write_text(html, encoding="utf-8")
-    print(f"  ✓ Report salvato: {HTML_PATH}")
-    print(f"  ✓ Articoli nel report: {len(articles)}\n")
+    print(f"  ✓ Report generato — {len(articles)} articoli\n")
 
-    print("Apertura nel browser...")
-    webbrowser.open(HTML_PATH.as_uri())
-    print("  ✓ Aperto!\n")
-    print("Suggerimento: aggiungi 'rassegna_stampa.py --refresh'")
-    print("alla pianificazione attività macOS/Windows per aggiornamenti automatici.")
-    print()
+    # In ambiente CI (GitHub Actions) non avviare il server: esci subito
+    if os.environ.get("CI"):
+        print("  ℹ  Modalità CI — server non avviato.")
+        return
+
+    # Avvia mini server HTTP
+    srv = _start_server()
+    actual_port = srv.server_address[1]
+    url = f"http://localhost:{actual_port}"
+
+    # Apre il browser PRIMA di serve_forever (che è bloccante)
+    threading.Timer(0.3, lambda: webbrowser.open(url)).start()
+
+    print(f"  🌐  Rassegna Stampa disponibile su: {url}")
+    print(f"  🔄  Usa il tasto 'Aggiorna notizie' nella pagina")
+    print(f"  ⛔  Premi Ctrl+C per uscire\n")
+
+    try:
+        srv.serve_forever()
+    except KeyboardInterrupt:
+        print("\n  ✓ Server arrestato. A presto!")
 
 if __name__ == "__main__":
     main()
