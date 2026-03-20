@@ -40,3 +40,5 @@ jobs:
           git add data/rassegna.db docs/index.html
           git diff --staged --quiet || git commit -m "Aggiornamento $(date -u '+%d/%m/%Y %H:%M UTC')"
           git push
+          # Sincronizza master (usato da GitHub Pages)
+          git push origin main:master
