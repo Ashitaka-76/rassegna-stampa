@@ -1453,6 +1453,13 @@ async function refreshNews() {{
 render();
 refreshBadges();
 
+// Nascondi il tasto Aggiorna se non siamo su localhost (GitHub Pages = statico)
+(function() {{
+  const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const btn = document.getElementById('refresh-btn');
+  if (btn && !isLocal) btn.style.display = 'none';
+}})();
+
 // ── SIDEBAR RESIZE ────────────────────────────────────────────────────────────
 (function() {{
   const handle = document.getElementById('sidebar-resize');
