@@ -347,7 +347,9 @@ HEADERS = {
 
 def clean_html(text: str) -> str:
     """Rimuove tag HTML e normalizza spazi."""
+    import html
     text = re.sub(r"<[^>]+>", " ", text or "")
+    text = html.unescape(text)
     text = re.sub(r"\s+", " ", text).strip()
     return text
 
