@@ -468,8 +468,11 @@ def build_html(articles: list[dict]) -> str:
         ensure_ascii=False
     )
 
-    # Articoli JSON (per filtri live JS)
-    arts_json = json.dumps(articles[:2000], ensure_ascii=False)   # max 2000
+    # Articoli JSON (per filtri live JS) — unescape entità HTML nei campi testo
+    import html as _html
+    def _unescape_article(a):
+        return {**a, "title": _html.unescape(a["title"]), "abstract": _html.unescape(a["abstract"] or "")}
+    arts_json = json.dumps([_unescape_article(a) for a in articles[:2000]], ensure_ascii=False)
 
     # Badge colori
     def cat_style(cat):
@@ -520,7 +523,7 @@ def build_html(articles: list[dict]) -> str:
     # Genera cards
     def render_article(a):
         safe_title    = a["title"].replace('"', '&quot;').replace('<', '&lt;').replace('>', '&gt;')
-        safe_abstract = a["abstract"].replace('<', '&lt;').replace('>', '&gt;')
+        safe_abstract = _html.unescape(a["abstract"] or "").replace('<', '&lt;').replace('>', '&gt;')
         safe_source   = a["source"].replace('<', '&lt;')
         cat   = a["category"]
         color = CATEGORIES.get(cat, {}).get("color", "#64748b")
