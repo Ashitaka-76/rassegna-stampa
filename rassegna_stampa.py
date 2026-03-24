@@ -489,24 +489,7 @@ def build_html(articles: list[dict]) -> str:
     def cat_slug(s):
         return re.sub(r'[^a-z0-9]', '-', s.lower()).strip('-')
 
-    # Voci standalone (non dentro macro-gruppi)
-    standalone_html = ''
-    for cat in STANDALONE_ITEMS:
-        info = CATEGORIES.get(cat, {})
-        standalone_html += (
-            f'<li class="nav-item" data-cat="{cat}" onclick="filterCat(this)">'
-            f'  <span class="nav-icon">{info.get("icon","📰")}</span>'
-            f'  <span class="nav-label">{cat}</span>'
-            f'  <span class="nav-badge" id="badge-{cat_slug(cat)}"'
-            f'        style="background:{info.get("color","#64748b")}">'
-            f'    {cat_counts.get(cat, 0)}</span>'
-            f'  <button class="cat-mark-btn"'
-            f'          title="Segna tutto letto: {cat}"'
-            f'          onclick="event.stopPropagation();markAllRead(&quot;{cat}&quot;,null)">'
-            f'    ✓</button>'
-            f'</li>'
-        )
-    sidebar_items = f'<ul class="standalone-items">{standalone_html}</ul>' if standalone_html else ''
+    sidebar_items = ''
 
     for macro in MACRO_CATEGORIES:
         macro_total = sum(cat_counts.get(c, 0) for c in macro["items"])
@@ -540,6 +523,26 @@ def build_html(articles: list[dict]) -> str:
             f'  </ul>'
             f'</div>'
         )
+
+    # Voci standalone in fondo alla sidebar
+    standalone_html = ''
+    for cat in STANDALONE_ITEMS:
+        info = CATEGORIES.get(cat, {})
+        standalone_html += (
+            f'<li class="nav-item nav-item--standalone" data-cat="{cat}" onclick="filterCat(this)">'
+            f'  <span class="nav-icon">{info.get("icon","📰")}</span>'
+            f'  <span class="nav-label">{cat}</span>'
+            f'  <span class="nav-badge" id="badge-{cat_slug(cat)}"'
+            f'        style="background:{info.get("color","#64748b")}">'
+            f'    {cat_counts.get(cat, 0)}</span>'
+            f'  <button class="cat-mark-btn"'
+            f'          title="Segna tutto letto: {cat}"'
+            f'          onclick="event.stopPropagation();markAllRead(&quot;{cat}&quot;,null)">'
+            f'    ✓</button>'
+            f'</li>'
+        )
+    if standalone_html:
+        sidebar_items += f'<ul class="standalone-items">{standalone_html}</ul>'
 
     # Genera cards
     def render_article(a):
@@ -699,7 +702,21 @@ body{{
 }}
 
 /* ── VOCI STANDALONE ─────────────────────────────────────────────── */
-.standalone-items{{list-style:none;padding:0;margin:0 0 .5rem 0}}
+.standalone-items{{
+  list-style:none;padding:0;margin:.5rem 0 0 0;
+  display:flex;flex-direction:column;gap:.25rem;
+}}
+.nav-item--standalone{{
+  background:linear-gradient(135deg,#00935c20,#00935c10);
+  border:1px solid #00935c40 !important;
+  color:var(--accent2);
+  font-weight:700;
+}}
+.nav-item--standalone:hover{{background:linear-gradient(135deg,#00935c30,#00935c18);}}
+.nav-item--standalone.active{{
+  background:linear-gradient(135deg,#00935c35,#00935c20);
+  border-color:#00935c70 !important;
+}}
 
 /* ── MACRO GROUPS ────────────────────────────────────────────────── */
 .macro-group{{margin-bottom:.15rem}}
