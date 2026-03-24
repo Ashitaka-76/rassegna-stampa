@@ -199,7 +199,7 @@ MACRO_CATEGORIES = [
         "label": "Benessere Finanziario",
         "icon":  "💰",
         "color": "#db2777",
-        "items": ["Welfare Aziendale", "Previdenza & Pensione", "Benefit & Fringe", "Rimborsi & Convenzioni"],
+        "items": ["Previdenza & Pensione", "Benefit & Fringe", "Rimborsi & Convenzioni"],
     },
     {
         "label": "Benessere Fisico ed Emotivo",
@@ -211,15 +211,18 @@ MACRO_CATEGORIES = [
         "label": "Eco & Mobilità",
         "icon":  "🌍",
         "color": "#0369a1",
-        "items": ["Mobilità Sostenibile", "Green Benefits", "Smart Working"],
+        "items": ["Mobilità Sostenibile", "Green Benefits"],
     },
     {
         "label": "Supporto Quotidiano",
         "icon":  "🤝",
         "color": "#d97706",
-        "items": ["Work-Life Balance", "Inclusione & Diversity", "Famiglia & Caregiving", "Servizi alla Persona", "Welfare Aziendale"],
+        "items": ["Work-Life Balance", "Inclusione & Diversity", "Famiglia & Caregiving", "Servizi alla Persona"],
     },
 ]
+
+# Voci che appaiono direttamente in sidebar (non dentro alcun macro-gruppo)
+STANDALONE_ITEMS = ["Welfare Aziendale", "Smart Working"]
 
 # ─── Fonti RSS ────────────────────────────────────────────────────────────────
 RSS_SOURCES = [
@@ -486,7 +489,25 @@ def build_html(articles: list[dict]) -> str:
     def cat_slug(s):
         return re.sub(r'[^a-z0-9]', '-', s.lower()).strip('-')
 
-    sidebar_items = ''
+    # Voci standalone (non dentro macro-gruppi)
+    standalone_html = ''
+    for cat in STANDALONE_ITEMS:
+        info = CATEGORIES.get(cat, {})
+        standalone_html += (
+            f'<li class="nav-item" data-cat="{cat}" onclick="filterCat(this)">'
+            f'  <span class="nav-icon">{info.get("icon","📰")}</span>'
+            f'  <span class="nav-label">{cat}</span>'
+            f'  <span class="nav-badge" id="badge-{cat_slug(cat)}"'
+            f'        style="background:{info.get("color","#64748b")}">'
+            f'    {cat_counts.get(cat, 0)}</span>'
+            f'  <button class="cat-mark-btn"'
+            f'          title="Segna tutto letto: {cat}"'
+            f'          onclick="event.stopPropagation();markAllRead(&quot;{cat}&quot;,null)">'
+            f'    ✓</button>'
+            f'</li>'
+        )
+    sidebar_items = f'<ul class="standalone-items">{standalone_html}</ul>' if standalone_html else ''
+
     for macro in MACRO_CATEGORIES:
         macro_total = sum(cat_counts.get(c, 0) for c in macro["items"])
         ms = cat_slug(macro["label"])
@@ -676,6 +697,9 @@ body{{
   letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);
   margin-top:.75rem;
 }}
+
+/* ── VOCI STANDALONE ─────────────────────────────────────────────── */
+.standalone-items{{list-style:none;padding:0;margin:0 0 .5rem 0}}
 
 /* ── MACRO GROUPS ────────────────────────────────────────────────── */
 .macro-group{{margin-bottom:.15rem}}
