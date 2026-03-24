@@ -710,6 +710,7 @@ body{{
   background:linear-gradient(135deg,#00935c20,#00935c10);
   border:1px solid #00935c40 !important;
   color:var(--accent2);
+  font-size:.82rem;
   font-weight:700;
 }}
 .nav-item--standalone:hover{{background:linear-gradient(135deg,#00935c30,#00935c18);}}
