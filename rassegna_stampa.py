@@ -73,7 +73,7 @@ CATEGORIES = {
             "portale welfare", "piattaforma welfare"
         ]
     },
-    # ── Benessere Finanziario ────────────────────────────────────────
+    # ── Benefit Aziendali ────────────────────────────────────────────
     "Previdenza & Pensione": {
         "icon": "🛡️", "color": "#64748b",
         "keywords": [
@@ -186,9 +186,131 @@ CATEGORIES = {
             "servizi dipendenti aziendali"
         ]
     },
+    # ── Benessere Finanziario (prodotti consumer) ─────────────────────
+    "Assicurazione Auto": {
+        "icon": "🚗", "color": "#dc2626",
+        "keywords": [
+            "assicurazione auto", "RC auto", "polizza auto",
+            "assicurazione veicoli", "preventivo assicurazione auto",
+            "tariffa RC auto", "assicurazione moto"
+        ]
+    },
+    "Noleggio Lungo Termine": {
+        "icon": "🚙", "color": "#7c3aed",
+        "keywords": [
+            "noleggio lungo termine", "NLT auto", "leasing auto privati",
+            "noleggio auto lungo termine privati", "rata noleggio auto",
+            "noleggio senza anticipo"
+        ]
+    },
+    "Conto Corrente Online": {
+        "icon": "🏦", "color": "#0891b2",
+        "keywords": [
+            "conto corrente online", "banca online italia", "conto digitale",
+            "conto corrente zero spese", "banking online", "conto online gratuito"
+        ]
+    },
+    "Prestiti Personali": {
+        "icon": "💸", "color": "#d97706",
+        "keywords": [
+            "prestito personale", "finanziamento personale",
+            "credito al consumo", "prestito online", "tasso prestito personale",
+            "miglior prestito personale"
+        ]
+    },
+    "Mutuo Prima Casa": {
+        "icon": "🏠", "color": "#16a34a",
+        "keywords": [
+            "mutuo prima casa", "mutuo acquisto casa",
+            "finanziamento prima casa", "tasso mutuo fisso variabile",
+            "mutuo giovani prima casa", "agevolazioni mutuo"
+        ]
+    },
+    "Surroga Mutuo": {
+        "icon": "🔄", "color": "#0369a1",
+        "keywords": [
+            "surroga mutuo", "portabilità mutuo", "sostituzione mutuo",
+            "trasferimento mutuo", "surroga bancaria", "convenienza surroga"
+        ]
+    },
+    "Cessione del Quinto": {
+        "icon": "📋", "color": "#9333ea",
+        "keywords": [
+            "cessione del quinto", "prestito cessione del quinto",
+            "CQS pensionati dipendenti", "finanziamento busta paga",
+            "cessione quinto stipendio"
+        ]
+    },
+    "Conto Deposito": {
+        "icon": "💰", "color": "#f59e0b",
+        "keywords": [
+            "conto deposito", "deposito vincolato", "tasso conto deposito",
+            "conto deposito libero vincolato", "migliori conti deposito",
+            "rendimento conto deposito"
+        ]
+    },
+    "Fondo Pensione": {
+        "icon": "🛡️", "color": "#475569",
+        "keywords": [
+            "piano pensionistico individuale", "PIP pensione",
+            "aderire pensione integrativa", "rendimento pip",
+            "confronto piani pensione", "versamento pensione individuale"
+        ]
+    },
+    "Assicurazione Sanitaria": {
+        "icon": "🏥", "color": "#059669",
+        "keywords": [
+            "assicurazione sanitaria individuale", "polizza salute privata",
+            "mutua sanitaria", "copertura sanitaria privata",
+            "rimborso spese mediche assicurazione", "polizza infortuni malattia"
+        ]
+    },
+    "Consolidamento Debiti": {
+        "icon": "⚖️", "color": "#ea580c",
+        "keywords": [
+            "consolidamento debiti", "estinzione anticipata prestiti",
+            "rifinanziamento debiti", "piano rientro debiti",
+            "prestito per saldare debiti", "fusione prestiti"
+        ]
+    },
+    "Mutuo Green": {
+        "icon": "🌱", "color": "#166534",
+        "keywords": [
+            "mutuo green", "mutuo sostenibile", "finanziamento efficienza energetica",
+            "mutuo ristrutturazione green", "prestito eco bonus",
+            "mutuo casa classe energetica"
+        ]
+    },
+    "PAC ETF": {
+        "icon": "📈", "color": "#4f46e5",
+        "keywords": [
+            "PAC ETF", "piano accumulo ETF", "investimento ETF",
+            "ETF fondi indice", "ETF borsa italia", "migliori ETF 2025",
+            "come investire ETF"
+        ]
+    },
+    "Bonifico Istantaneo": {
+        "icon": "⚡", "color": "#db2777",
+        "keywords": [
+            "bonifico istantaneo", "bonifico rapido", "instant payment",
+            "SCT Inst", "pagamento istantaneo banca", "costo bonifico istantaneo"
+        ]
+    },
 }
 
 MACRO_CATEGORIES = [
+    {
+        "label": "Benessere Finanziario",
+        "icon":  "💰",
+        "color": "#1d4ed8",
+        "items": [
+            "Assicurazione Auto", "Noleggio Lungo Termine", "Conto Corrente Online",
+            "Prestiti Personali", "Mutuo Prima Casa", "Surroga Mutuo",
+            "Cessione del Quinto", "Conto Deposito", "Fondo Pensione",
+            "Assicurazione Sanitaria", "Consolidamento Debiti", "Mutuo Green",
+            "PAC ETF", "Bonifico Istantaneo",
+        ],
+    },
     {
         "label": "Crescita Personale",
         "icon":  "🌟",
@@ -196,8 +318,8 @@ MACRO_CATEGORIES = [
         "items": ["Formazione & Sviluppo", "Coaching & Mentoring"],
     },
     {
-        "label": "Benessere Finanziario",
-        "icon":  "💰",
+        "label": "Benefit Aziendali",
+        "icon":  "🎁",
         "color": "#db2777",
         "items": ["Previdenza & Pensione", "Benefit & Fringe", "Rimborsi & Convenzioni"],
     },
@@ -260,6 +382,35 @@ RSS_SOURCES = [
      "https://news.google.com/rss/search?q=polizza+sanitaria+integrativa+dipendenti&hl=it&gl=IT&ceid=IT:it"),
     ("Google News · ESG Imprese",
      "https://news.google.com/rss/search?q=ESG+sostenibilità+imprese+lavoratori+italia&hl=it&gl=IT&ceid=IT:it"),
+    # ── Benessere Finanziario (prodotti consumer) ────────────────────
+    ("Google News · Assicurazione Auto",
+     "https://news.google.com/rss/search?q=assicurazione+auto+RC+polizza+italia+2025&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Noleggio Lungo Termine",
+     "https://news.google.com/rss/search?q=noleggio+lungo+termine+NLT+auto+privati&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Conto Corrente Online",
+     "https://news.google.com/rss/search?q=conto+corrente+online+banca+digitale+italia&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Prestiti Personali",
+     "https://news.google.com/rss/search?q=prestito+personale+finanziamento+credito+consumo&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Mutuo Prima Casa",
+     "https://news.google.com/rss/search?q=mutuo+prima+casa+tasso+agevolazioni+2025&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Surroga Mutuo",
+     "https://news.google.com/rss/search?q=surroga+mutuo+portabilità+convenienza&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Cessione del Quinto",
+     "https://news.google.com/rss/search?q=cessione+del+quinto+stipendio+pensione&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Conto Deposito",
+     "https://news.google.com/rss/search?q=conto+deposito+tasso+rendimento+2025+italia&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Fondo Pensione",
+     "https://news.google.com/rss/search?q=PIP+piano+individuale+pensionistico+rendimento&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Assicurazione Sanitaria",
+     "https://news.google.com/rss/search?q=assicurazione+sanitaria+polizza+salute+privata+italia&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Consolidamento Debiti",
+     "https://news.google.com/rss/search?q=consolidamento+debiti+rifinanziamento+prestiti+italia&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Mutuo Green",
+     "https://news.google.com/rss/search?q=mutuo+green+sostenibile+efficienza+energetica+casa&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · PAC ETF",
+     "https://news.google.com/rss/search?q=PAC+ETF+piano+accumulo+investimento+fondi+indice&hl=it&gl=IT&ceid=IT:it"),
+    ("Google News · Bonifico Istantaneo",
+     "https://news.google.com/rss/search?q=bonifico+istantaneo+banche+costi+regolamento+UE&hl=it&gl=IT&ceid=IT:it"),
 ]
 
 # ─── DATABASE ─────────────────────────────────────────────────────────────────
@@ -375,7 +526,7 @@ def categorize(title: str, abstract: str) -> str | None:
     text = (title + " " + abstract).lower()
     for cat, info in CATEGORIES.items():
         for kw in info["keywords"]:
-            if kw in text:
+            if kw.lower() in text:
                 return cat
     return None
 
