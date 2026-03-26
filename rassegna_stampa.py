@@ -949,12 +949,67 @@ body{{
 ::-webkit-scrollbar-track{{background:transparent}}
 ::-webkit-scrollbar-thumb{{background:#209f6f60;border-radius:3px}}
 
-/* Responsive */
+/* ── HAMBURGER BUTTON ────────────────────────────────────────────────────── */
+.hamburger-btn{{
+  display:none;background:none;border:none;cursor:pointer;
+  padding:.4rem .5rem;border-radius:8px;color:var(--text);
+  font-size:1.35rem;line-height:1;flex-shrink:0;
+  transition:background .15s;
+}}
+.hamburger-btn:hover{{background:var(--surface2)}}
+
+/* ── SIDEBAR OVERLAY (mobile) ────────────────────────────────────────────── */
+.sidebar-overlay{{
+  display:none;position:fixed;inset:0;z-index:290;
+  background:rgba(0,0,0,.45);opacity:0;
+  transition:opacity .28s;pointer-events:none;
+}}
+.sidebar-overlay.visible{{opacity:1;pointer-events:auto}}
+
+/* ── TABLET ──────────────────────────────────────────────────────────────── */
+@media(max-width:1100px){{
+  .topbar{{padding:0 1rem;gap:.6rem}}
+  .update-info{{display:none}}
+  .topbar-btn{{font-size:.72rem;padding:.3rem .65rem}}
+  .cards-grid{{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}}
+}}
+
+/* ── MOBILE ──────────────────────────────────────────────────────────────── */
 @media(max-width:768px){{
-  .sidebar{{display:none}}
-  .main{{margin-left:0;padding:1rem}}
-  .cards-grid{{grid-template-columns:1fr}}
+  /* Topbar compatta */
+  .topbar{{
+    height:60px;padding:0 .85rem;gap:.55rem;
+    flex-wrap:nowrap;overflow:hidden;
+  }}
+  .topbar-logo{{height:36px;margin-right:.25rem}}
+  .logo{{font-size:.95rem}}
   .stats-chips{{display:none}}
+  .update-info{{display:none}}
+  .topbar-btn{{display:none}}
+  .hamburger-btn{{display:flex;align-items:center;justify-content:center}}
+
+  /* Layout */
+  .layout{{padding-top:60px}}
+
+  /* Sidebar come drawer laterale */
+  .sidebar{{
+    top:0;z-index:300;
+    width:min(var(--sidebar-w), 85vw);
+    padding-top:68px;
+    transform:translateX(-105%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    box-shadow:4px 0 32px rgba(0,0,0,.22);
+  }}
+  .sidebar.mobile-open{{transform:translateX(0)}}
+  .sidebar-overlay{{display:block}}
+  .sidebar-resize{{display:none}}
+
+  /* Contenuto principale */
+  .main{{margin-left:0;padding:.85rem}}
+  .cards-grid{{grid-template-columns:1fr}}
+  .search-row{{flex-wrap:wrap;gap:.5rem}}
+  .date-label{{flex-wrap:wrap;gap:.35rem}}
+  .mark-read-btn{{font-size:.65rem;padding:.18rem .5rem}}
 }}
 
 /* Animazioni */
@@ -966,6 +1021,8 @@ body{{
 
 <!-- TOPBAR -->
 <header class="topbar">
+  <button class="hamburger-btn" id="hamburger-btn"
+          onclick="toggleMobileMenu()" aria-label="Menu categorie">&#9776;</button>
   {logo_tag}
   <div class="logo">
     📰 Rassegna Stampa
@@ -992,6 +1049,9 @@ body{{
     Aggiornato<br>{now_str}
   </div>
 </header>
+
+<!-- OVERLAY mobile sidebar -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileMenu()"></div>
 
 <!-- LAYOUT -->
 <div class="layout">
@@ -1495,6 +1555,46 @@ async function refreshNews() {{
     }}
   }}
 }}
+
+// ── MOBILE SIDEBAR ────────────────────────────────────────────────────────────
+function toggleMobileMenu() {{
+  const sidebar  = document.querySelector('.sidebar');
+  const overlay  = document.getElementById('sidebar-overlay');
+  const btn      = document.getElementById('hamburger-btn');
+  const isOpen   = sidebar.classList.contains('mobile-open');
+  if (isOpen) {{
+    closeMobileMenu();
+  }} else {{
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+    btn.textContent = '✕';
+  }}
+}}
+
+function closeMobileMenu() {{
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const btn     = document.getElementById('hamburger-btn');
+  sidebar.classList.remove('mobile-open');
+  overlay.classList.remove('visible');
+  document.body.style.overflow = '';
+  if (btn) btn.innerHTML = '&#9776;';
+}}
+
+// Chiudi il drawer mobile dopo aver selezionato una categoria
+(function() {{
+  const sidebar = document.querySelector('.sidebar');
+  if (!sidebar) return;
+  sidebar.addEventListener('click', e => {{
+    if (window.innerWidth > 768) return;
+    const hit = e.target.closest('.nav-item,.nav-all,.nav-item--standalone,.macro-header');
+    if (hit) {{
+      // Per le macro-header aspetta un tick (potrebbero espandersi)
+      setTimeout(closeMobileMenu, 180);
+    }}
+  }});
+}})();
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 render();
