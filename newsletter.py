@@ -29,7 +29,7 @@ SMTP_PORT = 465
 
 SMTP_USER     = os.environ.get("SMTP_USER", "")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
-RECIPIENTS    = [r.strip() for r in os.environ.get("NEWSLETTER_TO", "").split(",") if r.strip()]
+RECIPIENTS    = [r.strip() for r in os.environ.get("NEWSLETTER_TO", "").strip().split(",") if r.strip()]
 
 MAX_PER_CAT = 3  # articoli massimi per categoria
 
