@@ -10,7 +10,7 @@ Variabili d'ambiente richieste (GitHub Secrets):
   NEWSLETTER_TO — destinatari separati da virgola
 """
 
-import os, sqlite3, smtplib, html as _html, logging, sys
+import os, re, sqlite3, smtplib, html as _html, logging, sys
 from datetime import datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -29,7 +29,7 @@ SMTP_PORT = 465
 
 SMTP_USER     = os.environ.get("SMTP_USER", "")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
-RECIPIENTS    = [r.strip() for r in os.environ.get("NEWSLETTER_TO", "").strip().split(",") if r.strip()]
+RECIPIENTS    = [r.strip() for r in re.split(r'[,\r\n]+', os.environ.get("NEWSLETTER_TO", "").strip()) if r.strip()]
 
 MAX_PER_CAT = 3  # articoli massimi per categoria
 
