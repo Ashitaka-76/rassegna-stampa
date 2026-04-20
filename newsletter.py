@@ -231,17 +231,15 @@ def build_newsletter_html(by_cat: dict[str, list[dict]], total: int, date_str: s
        style="max-width:600px;width:100%;">
 
   <!-- HEADER -->
-  <tr><td style="background:#1e293b;border-radius:12px 12px 0 0;
-                 padding:28px 24px;text-align:center;">
-    <div style="color:#ffffff;font-size:22px;font-weight:bold;">
-      📰 Rassegna Stampa
-    </div>
-    <div style="color:#94a3b8;font-size:13px;margin-top:6px;">
-      Welfare &amp; Wellbeing &nbsp;·&nbsp; {date_str}
-    </div>
-    <div style="color:#64748b;font-size:12px;margin-top:4px;">
-      {total} articoli delle ultime 24 ore
-    </div>
+  <tr><td style="border-radius:12px 12px 0 0;overflow:hidden;font-size:0;line-height:0;">
+    <img src="https://ashitaka-76.github.io/rassegna-stampa/Header_WM_dem.gif"
+         alt="WellMakers by BNP Paribas — Tutte le nostre forme del Benessere"
+         width="600" style="display:block;width:100%;max-width:600px;border:0;">
+  </td></tr>
+  <tr><td style="background:#0d4f4f;padding:10px 24px 14px;text-align:center;">
+    <span style="color:#a7d8d8;font-size:12px;">
+      Rassegna Stampa &nbsp;·&nbsp; {date_str} &nbsp;·&nbsp; {total} articoli delle ultime 24 ore
+    </span>
   </td></tr>
 
   <!-- SEZIONI -->
