@@ -5,6 +5,9 @@ on:
     - cron: '0 7 * * *'   # 07:00 UTC = 08:00 CET (inverno) / 09:00 CEST (estate)
   workflow_dispatch:        # lancio manuale dalla UI di GitHub (utile per test)
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read            # solo lettura del repo — nessun push
 
