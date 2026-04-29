@@ -24,8 +24,8 @@ LOG_PATH = APP_DIR / "data" / "newsletter.log"
 
 # ─── SMTP ────────────────────────────────────────────────────────────────────
 
-SMTP_HOST = "smtps.aruba.it"
-SMTP_PORT = 465
+SMTP_HOST = "smtp.gmail.com"
+SMTP_PORT = 587
 
 SMTP_USER     = os.environ.get("SMTP_USER", "")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
@@ -269,7 +269,8 @@ def send(html_body: str, date_str: str):
     msg["To"]      = ", ".join(RECIPIENTS)
     msg.attach(MIMEText(html_body, "html", "utf-8"))
 
-    with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT) as srv:
+    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as srv:
+        srv.starttls()
         srv.login(SMTP_USER, SMTP_PASSWORD)
         srv.sendmail(SMTP_USER, RECIPIENTS, msg.as_string())
 
