@@ -272,7 +272,7 @@ def send(html_body: str, date_str: str):
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as srv:
         srv.starttls()
         srv.login(SMTP_USER, SMTP_PASSWORD)
-        srv.sendmail(SMTP_USER, RECIPIENTS, msg.as_string())
+        srv.send_message(msg)
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
