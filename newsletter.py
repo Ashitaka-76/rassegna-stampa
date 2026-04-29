@@ -28,8 +28,8 @@ LOG_PATH = APP_DIR / "data" / "newsletter.log"
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 587
 
-SMTP_USER     = os.environ.get("SMTP_USER", "").strip()
-SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "").strip()
+SMTP_USER     = re.sub(r'\s+', '', os.environ.get("SMTP_USER", ""))
+SMTP_PASSWORD = re.sub(r'\s+', '', os.environ.get("SMTP_PASSWORD", ""))
 RECIPIENTS    = [r.strip() for r in re.split(r'[,\r\n\xa0]+', os.environ.get("NEWSLETTER_TO", "").strip()) if r.strip()]
 
 MAX_PER_CAT = 3  # articoli massimi per categoria
