@@ -11,6 +11,7 @@ Variabili d'ambiente richieste (GitHub Secrets):
 """
 
 import os, re, sqlite3, smtplib, html as _html, logging, sys
+from email.header import Header
 from datetime import datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -264,7 +265,7 @@ def build_newsletter_html(by_cat: dict[str, list[dict]], total: int, date_str: s
 
 def send(html_body: str, date_str: str):
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = f"📰 Rassegna Stampa — {date_str}"
+    msg["Subject"] = Header(f"📰 Rassegna Stampa — {date_str}", "utf-8")
     msg["From"]    = SMTP_USER
     msg["To"]      = ", ".join(RECIPIENTS)
     msg.attach(MIMEText(html_body, "html", "utf-8"))
@@ -272,7 +273,7 @@ def send(html_body: str, date_str: str):
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as srv:
         srv.starttls()
         srv.login(SMTP_USER, SMTP_PASSWORD)
-        srv.send_message(msg)
+        srv.sendmail(SMTP_USER, RECIPIENTS, msg.as_bytes())
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
