@@ -28,9 +28,9 @@ LOG_PATH = APP_DIR / "data" / "newsletter.log"
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 587
 
-SMTP_USER     = os.environ.get("SMTP_USER", "")
-SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
-RECIPIENTS    = [r.strip() for r in re.split(r'[,\r\n]+', os.environ.get("NEWSLETTER_TO", "").strip()) if r.strip()]
+SMTP_USER     = os.environ.get("SMTP_USER", "").strip()
+SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "").strip()
+RECIPIENTS    = [r.strip() for r in re.split(r'[,\r\n\xa0]+', os.environ.get("NEWSLETTER_TO", "").strip()) if r.strip()]
 
 MAX_PER_CAT = 3  # articoli massimi per categoria
 
@@ -303,8 +303,8 @@ def main():
     try:
         send(html_body, date_str)
         log.info("Inviata a %d destinatari — %d articoli", len(RECIPIENTS), total)
-    except Exception as exc:
-        log.error("Errore invio SMTP: %s", exc)
+    except Exception:
+        log.exception("Errore invio SMTP")
         sys.exit(1)
 
 
