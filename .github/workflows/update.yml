@@ -46,5 +46,5 @@ jobs:
           git add data/rassegna.db docs/index.html
           git diff --staged --quiet && exit 0
           git commit -m "Aggiornamento $(date -u '+%d/%m/%Y %H:%M UTC')"
-          git pull --rebase -X theirs origin main
+          git pull --rebase --autostash -X theirs origin main
           git push
